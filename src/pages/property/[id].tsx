@@ -4,19 +4,21 @@
 
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import type { GetServerSideProps } from 'next';
+import type { Property } from '@prisma/client';
 import Image from 'next/image';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
-import { mockProperties } from '@/lib/mockData';
 
-export default function PropertyDetailPage() {
+interface PropertyDetailPageProps {
+  property: Property | null;
+  error?: string;
+}
+
+export default function PropertyDetailPage({ property, error }: PropertyDetailPageProps) {
   const router = useRouter();
-  const { id } = router.query;
-
-  // Find property by ID
-  const property = mockProperties.find(p => p.id === id);
 
   const [formData, setFormData] = useState({
     name: '',
@@ -25,7 +27,7 @@ export default function PropertyDetailPage() {
     message: '',
   });
 
-  if (!property) {
+  if (!property && !error) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
@@ -35,6 +37,26 @@ export default function PropertyDetailPage() {
           <Button variant="primary" onClick={() => router.push('/')}>
             Back to Home
           </Button>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error || !property) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col">
+        <Header />
+        <main className="flex-1 container mx-auto px-6 py-16 text-center">
+          <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded inline-block">
+            <p className="font-bold">Error loading property:</p>
+            <p>{error || 'Unknown error'}</p>
+          </div>
+          <div className="mt-8">
+            <Button variant="primary" onClick={() => router.push('/')}>
+              Back to Home
+            </Button>
+          </div>
         </main>
         <Footer />
       </div>
@@ -255,3 +277,43 @@ export default function PropertyDetailPage() {
     </div>
   );
 }
+
+/**
+ * Fetch property by ID from API at request time
+ */
+export const getServerSideProps: GetServerSideProps<PropertyDetailPageProps> = async (context) => {
+  const { id } = context.params as { id: string };
+
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/properties/${id}`);
+
+    if (!response.ok) {
+      if (response.status === 404) {
+        return {
+          props: {
+            property: null,
+          },
+        };
+      }
+      throw new Error(`API returned ${response.status}`);
+    }
+
+    const property = await response.json();
+
+    return {
+      props: {
+        property,
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching property:', error);
+
+    return {
+      props: {
+        property: null,
+        error: 'Unable to load property. Please try again later.',
+      },
+    };
+  }
+};
