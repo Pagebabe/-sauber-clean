@@ -19,6 +19,8 @@
     "@types/papaparse": "^5.5.0",
     "@types/react-tabs": "^5.0.4",
     "bcryptjs": "^3.0.3",
+    "cmdk": "^1.1.1",
+    "date-fns": "^4.1.0",
     "googleapis": "^166.0.0",
     "i18next": "^25.6.2",
     "next": "16.0.3",
@@ -29,8 +31,10 @@
     "prisma": "^6.19.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-hot-toast": "^2.6.0",
     "react-i18next": "^16.3.3",
     "react-tabs": "^6.1.0",
+    "recharts": "^3.4.1",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
