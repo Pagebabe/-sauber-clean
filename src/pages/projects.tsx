@@ -5,6 +5,7 @@
 import React from 'react';
 import type { GetServerSideProps } from 'next';
 import type { Project } from '@prisma/client';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
@@ -147,7 +148,7 @@ export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
 /**
  * Fetch projects from API at request time
  */
-export const getServerSideProps: GetServerSideProps<ProjectsPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<ProjectsPageProps> = async (context) => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/projects`);
@@ -160,6 +161,7 @@ export const getServerSideProps: GetServerSideProps<ProjectsPageProps> = async (
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         projects: data.projects || [],
       },
     };
@@ -168,6 +170,7 @@ export const getServerSideProps: GetServerSideProps<ProjectsPageProps> = async (
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         projects: [],
         error: 'Unable to load projects. Please try again later.',
       },
