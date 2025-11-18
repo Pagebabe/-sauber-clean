@@ -5,12 +5,14 @@
 import React, { useState } from 'react';
 import type { GetStaticProps } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
 export default function ContactPage() {
+  const { t } = useTranslation('common');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -22,7 +24,7 @@ export default function ContactPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Contact form submitted:', formData);
-    alert('Thank you for your message! We will contact you soon.');
+    alert(t('contact.formSuccess'));
     setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
   };
 
@@ -34,9 +36,9 @@ export default function ContactPage() {
         {/* Page Header */}
         <div className="bg-gradient-to-r from-secondary to-secondary-light text-white py-16">
           <div className="container mx-auto px-6">
-            <h1 className="text-4xl font-bold mb-4">Contact Us</h1>
+            <h1 className="text-4xl font-bold mb-4">{t('contact.pageTitle')}</h1>
             <p className="text-lg opacity-90">
-              Get in touch with our team of real estate experts
+              {t('contact.pageSubtitle')}
             </p>
           </div>
         </div>
@@ -47,22 +49,22 @@ export default function ContactPage() {
             {/* Contact Form */}
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-text-primary mb-6">Send us a Message</h2>
+                <h2 className="text-2xl font-bold text-text-primary mb-6">{t('contact.formTitle')}</h2>
                 <form onSubmit={handleSubmit} data-testid="contact-form">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <Input
-                      label="Name"
+                      label={t('contact.formName')}
                       type="text"
-                      placeholder="Your name"
+                      placeholder={t('contact.formNamePlaceholder')}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
                       fullWidth
                     />
                     <Input
-                      label="Email"
+                      label={t('contact.formEmail')}
                       type="email"
-                      placeholder="your@email.com"
+                      placeholder={t('contact.formEmailPlaceholder')}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
@@ -72,18 +74,18 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <Input
-                      label="Phone"
+                      label={t('contact.formPhone')}
                       type="tel"
-                      placeholder="+66 XX XXX XXXX"
+                      placeholder={t('contact.formPhonePlaceholder')}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       required
                       fullWidth
                     />
                     <Input
-                      label="Subject"
+                      label={t('contact.formSubject')}
                       type="text"
-                      placeholder="What is this about?"
+                      placeholder={t('contact.formSubjectPlaceholder')}
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
                       required
@@ -93,12 +95,12 @@ export default function ContactPage() {
 
                   <div className="mb-6">
                     <label className="block text-sm font-medium text-text-primary mb-2">
-                      Message
+                      {t('contact.formMessage')}
                     </label>
                     <textarea
                       className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                       rows={6}
-                      placeholder="Tell us more about your needs..."
+                      placeholder={t('contact.formMessagePlaceholder')}
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       required
@@ -106,7 +108,7 @@ export default function ContactPage() {
                   </div>
 
                   <Button type="submit" variant="primary" size="lg" fullWidth>
-                    Send Message
+                    {t('contact.formSubmit')}
                   </Button>
                 </form>
               </div>
@@ -115,7 +117,7 @@ export default function ContactPage() {
             {/* Contact Information */}
             <div className="lg:col-span-1">
               <div className="bg-background-secondary rounded-lg p-8 mb-6">
-                <h2 className="text-2xl font-bold text-text-primary mb-6">Contact Information</h2>
+                <h2 className="text-2xl font-bold text-text-primary mb-6">{t('contact.contactInfoTitle')}</h2>
 
                 <div className="space-y-6">
                   <div>
@@ -123,11 +125,12 @@ export default function ContactPage() {
                       <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
                         📍
                       </div>
-                      <div className="font-semibold text-text-primary">Office Address</div>
+                      <div className="font-semibold text-text-primary">{t('contact.officeAddress')}</div>
                     </div>
                     <p className="text-text-secondary ml-13">
-                      123 Beach Road, Pattaya City<br />
-                      Chonburi 20150, Thailand
+                      {t('contact.officeAddressText').split('\n').map((line, i) => (
+                        <span key={i}>{line}{i === 0 && <br />}</span>
+                      ))}
                     </p>
                   </div>
 
@@ -136,11 +139,11 @@ export default function ContactPage() {
                       <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
                         📞
                       </div>
-                      <div className="font-semibold text-text-primary">Phone</div>
+                      <div className="font-semibold text-text-primary">{t('contact.phone')}</div>
                     </div>
                     <p className="text-text-secondary ml-13">
                       <a href="tel:+66123456789" className="hover:text-primary transition-colors">
-                        +66 12 345 6789
+                        {t('contact.phoneNumber')}
                       </a>
                     </p>
                   </div>
@@ -150,11 +153,11 @@ export default function ContactPage() {
                       <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
                         📧
                       </div>
-                      <div className="font-semibold text-text-primary">Email</div>
+                      <div className="font-semibold text-text-primary">{t('contact.email')}</div>
                     </div>
                     <p className="text-text-secondary ml-13">
                       <a href="mailto:info@pw-pattaya.com" className="hover:text-primary transition-colors">
-                        info@pw-pattaya.com
+                        {t('contact.emailAddress')}
                       </a>
                     </p>
                   </div>
@@ -164,12 +167,12 @@ export default function ContactPage() {
                       <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white">
                         ⏰
                       </div>
-                      <div className="font-semibold text-text-primary">Working Hours</div>
+                      <div className="font-semibold text-text-primary">{t('contact.workingHours')}</div>
                     </div>
                     <p className="text-text-secondary ml-13">
-                      Monday - Friday: 9:00 AM - 6:00 PM<br />
-                      Saturday: 10:00 AM - 4:00 PM<br />
-                      Sunday: Closed
+                      {t('contact.workingHoursText').split('\n').map((line, i) => (
+                        <span key={i}>{line}{i < 2 && <br />}</span>
+                      ))}
                     </p>
                   </div>
                 </div>
@@ -177,7 +180,7 @@ export default function ContactPage() {
 
               {/* Social Media */}
               <div className="bg-white rounded-lg p-8 shadow-md">
-                <h3 className="text-xl font-bold text-text-primary mb-4">Follow Us</h3>
+                <h3 className="text-xl font-bold text-text-primary mb-4">{t('contact.followUs')}</h3>
                 <div className="flex gap-4">
                   <a
                     href="https://facebook.com"
