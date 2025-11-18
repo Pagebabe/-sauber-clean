@@ -7,6 +7,7 @@ import { SEO } from '@/components/seo/SEO';
 import type { GetServerSideProps } from 'next';
 import type { Property } from '@prisma/client';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 
 interface HomeProps {
   properties: Property[];
@@ -14,6 +15,7 @@ interface HomeProps {
 }
 
 export default function Home({ properties, error }: HomeProps) {
+  const { t } = useTranslation('common');
   // Show first 6 properties for Hot Deals
   const hotDeals = properties.slice(0, 6);
 
@@ -33,7 +35,7 @@ export default function Home({ properties, error }: HomeProps) {
         {/* Error Display */}
         {error && (
           <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-            <p className="font-bold">Error loading properties:</p>
+            <p className="font-bold">{t('home.errorLoading')}</p>
             <p>{error}</p>
           </div>
         )}
@@ -41,7 +43,7 @@ export default function Home({ properties, error }: HomeProps) {
         {/* Hot Deals Section */}
         <section className="mb-16">
           <h2 className="text-3xl font-bold text-text-primary mb-8 text-center">
-            Hot Deals for sale in Pattaya
+            {t('home.hotDeals')}
           </h2>
 
           {/* Property Grid */}
@@ -56,13 +58,13 @@ export default function Home({ properties, error }: HomeProps) {
               {/* Show More Button */}
               <div className="text-center">
                 <Button variant="secondary" size="lg">
-                  Show More
+                  {t('common.showMore')}
                 </Button>
               </div>
             </>
           ) : (
             <p className="text-center text-text-muted">
-              No properties available at the moment.
+              {t('home.noProperties')}
             </p>
           )}
         </section>
@@ -70,10 +72,10 @@ export default function Home({ properties, error }: HomeProps) {
         {/* Popular Projects Section - Placeholder */}
         <section className="mb-16 p-8 bg-background-secondary rounded-lg text-center">
           <h2 className="text-2xl font-bold text-text-primary mb-4">
-            Popular Projects
+            {t('home.popularProjects')}
           </h2>
           <p className="text-text-muted">
-            Project listings coming soon...
+            {t('home.projectsComingSoon')}
           </p>
         </section>
       </main>
@@ -112,7 +114,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async (context)
       props: {
         ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         properties: [],
-        error: 'Unable to load properties. Please try again later.',
+        error: context.locale === 'de' ? 'Immobilien konnten nicht geladen werden. Bitte versuchen Sie es später erneut.' : 'Unable to load properties. Please try again later.',
       },
     };
   }
