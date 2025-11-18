@@ -119,12 +119,20 @@ export default function AdminPropertiesPage() {
             <h2 className="text-2xl font-bold text-text-primary mb-2">Properties</h2>
             <p className="text-text-muted">Manage your property listings</p>
           </div>
-          <Button
-            variant="primary"
-            onClick={() => router.push('/admin/properties/new')}
-          >
-            + Add Property
-          </Button>
+          <div className="flex gap-3">
+            <Button
+              variant="secondary"
+              onClick={() => router.push('/admin/properties/import')}
+            >
+              📥 Import from Sheets
+            </Button>
+            <Button
+              variant="primary"
+              onClick={() => router.push('/admin/properties/new')}
+            >
+              + Add Property
+            </Button>
+          </div>
         </div>
 
         {/* Error Message */}
