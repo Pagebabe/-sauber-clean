@@ -35,6 +35,49 @@ model Property {
   features    String[] // Array of features
   latitude    Float?
   longitude   Float?
+
+  // Owner/Contact Information
+  ownerName     String?
+  ownerLine     String?
+  ownerPhone    String?
+  ownerEmail    String?
+  ownerType     String?  // "Owner" | "Agent"
+
+  // Listing Details
+  commission    Float?   @default(3.0)
+  shortTermLet  Boolean  @default(false)
+  quota         String?  // "Thai" | "Foreign" | "Limited Company"
+  landSize      String?  // SQWha from Google Sheets
+
+  // Views (Multi-select)
+  views         String[] // ["Sea View", "City View", "Mountain View", "Pool View", "Garden View", "Panoramic View"]
+
+  // Features Categories
+  privateFeatures    String[] // ["Private Terrace", "Private Jacuzzi", etc.]
+  roomsSpaces        String[] // ["Walk-in Closet", "Laundry Room", "Home Office", etc.]
+  communalFacilities String[] // ["Swimming Pool", "Fitness Center", "Sauna", "24h Reception", "Communal Garden", "Communal Parking", "Lobby", "Co-working Space", etc.]
+  technicalEquipment String[] // ["WiFi", "High Speed Internet", "Air Conditioning", "Satellite TV", "CCTV", "Terrace", "Balcony", "Large Terrace", "Large Balcony", etc.]
+  security           String[] // ["24h Communal Security", "24h Patrolling Security", "Key Card Access", "Security Guard", "Personal Security System", etc.]
+  locationFeatures   String[] // ["Close to Beach", "Beach Front", "City Center", "Close to Shopping Center", "Close to Hospital", "Close to Terminal 21", "Close to Central Festival", "Near Walking Street", "Near Jomtien Beach", "On Main Road", "On Taxi Routes", "Easy Beach Access", "Quiet Area", etc.]
+
+  // Kitchen & Layout
+  furnishingStatus String?  // "Fully Furnished" | "Partially Furnished" | "Unfurnished"
+  kitchenFeatures  String[] // ["European Kitchen", "Kitchenette", "Built-in Appliances", "Open Plan Kitchen", etc.]
+  layoutFeatures   String[] // ["Corner Unit", "High Floor", etc.]
+
+  // Financial Details
+  maintenanceCharges Int?     // Baht/Month
+  commonAreaFee      Float?   // Baht/sqm/Month
+  transferCosts      String?  // "Seller Pays" | "Buyer Pays" | "Shared 50/50"
+
+  // Availability & Remarks
+  availableFrom      DateTime?
+  specialRemarks     String?  @db.Text
+
+  // Import Source Tracking
+  importSource       String?  @default("manual") // "manual" | "google-sheets" | "csv"
+  importDate         DateTime?
+
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -42,6 +85,8 @@ model Property {
   @@index([propertyType])
   @@index([listingType])
   @@index([status])
+  @@index([ownerEmail])
+  @@index([quota])
 }
 
 // Project Model
