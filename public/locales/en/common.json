@@ -185,6 +185,84 @@
     "stat4": "98%",
     "stat4Label": "Client Satisfaction"
   },
+  "services": {
+    "pageTitle": "Our Services",
+    "pageSubtitle": "Comprehensive real estate services tailored to your needs",
+    "propertySales": {
+      "title": "Property Sales",
+      "description": "Comprehensive buying and selling services for all types of properties in Pattaya.",
+      "feature1": "Property valuation and market analysis",
+      "feature2": "Professional photography and marketing",
+      "feature3": "Buyer screening and qualification",
+      "feature4": "Negotiation and contract management",
+      "feature5": "Legal support and documentation",
+      "feature6": "After-sales support and assistance"
+    },
+    "rentalServices": {
+      "title": "Rental Services",
+      "description": "Long-term and short-term rental management for property owners and tenants.",
+      "feature1": "Tenant screening and background checks",
+      "feature2": "Rental price recommendations",
+      "feature3": "Property maintenance coordination",
+      "feature4": "Lease agreement preparation",
+      "feature5": "Rent collection and payment processing",
+      "feature6": "24/7 tenant support"
+    },
+    "propertyManagement": {
+      "title": "Property Management",
+      "description": "Full-service property management for residential and commercial properties.",
+      "feature1": "Regular property inspections",
+      "feature2": "Maintenance and repair coordination",
+      "feature3": "Financial reporting and accounting",
+      "feature4": "Utility management and payments",
+      "feature5": "Emergency response service",
+      "feature6": "Rental income optimization"
+    },
+    "investmentConsulting": {
+      "title": "Investment Consulting",
+      "description": "Expert advice on property investment opportunities and portfolio management.",
+      "feature1": "Market research and trend analysis",
+      "feature2": "ROI calculations and projections",
+      "feature3": "Investment strategy development",
+      "feature4": "Portfolio diversification advice",
+      "feature5": "Risk assessment and mitigation",
+      "feature6": "Exit strategy planning"
+    },
+    "legalAssistance": {
+      "title": "Legal Assistance",
+      "description": "Professional legal support for all property transactions and documentation.",
+      "feature1": "Contract review and drafting",
+      "feature2": "Title deed verification",
+      "feature3": "Foreign ownership guidance",
+      "feature4": "Company formation support",
+      "feature5": "Tax planning and advice",
+      "feature6": "Dispute resolution assistance"
+    },
+    "relocationServices": {
+      "title": "Relocation Services",
+      "description": "Complete relocation support for international clients moving to Pattaya.",
+      "feature1": "Area orientation tours",
+      "feature2": "School and hospital information",
+      "feature3": "Utility connection assistance",
+      "feature4": "Visa and permit guidance",
+      "feature5": "Banking and financial setup",
+      "feature6": "Cultural adaptation support"
+    },
+    "learnMore": "Learn More →",
+    "ctaHeading": "Need Help Choosing a Service?",
+    "ctaText": "Our team of experts is here to guide you through your real estate journey. Contact us today for a free consultation.",
+    "ctaButton1": "Contact Us",
+    "ctaButton2": "Schedule Consultation",
+    "whyChooseTitle": "Why Choose Our Services",
+    "benefit1Title": "Expert Team",
+    "benefit1Description": "15+ years of experience in Pattaya real estate market",
+    "benefit2Title": "Multilingual",
+    "benefit2Description": "Service in English, German, Thai, Russian, and French",
+    "benefit3Title": "Personalized",
+    "benefit3Description": "Tailored solutions for your unique needs and goals",
+    "benefit4Title": "Full Support",
+    "benefit4Description": "End-to-end assistance from search to after-sales"
+  },
   "footer": {
     "companyName": "PW Pattaya",
     "companyLegal": "Global Real Estate Co.,Ltd",
