@@ -6,6 +6,7 @@ import React from 'react';
 import type { GetServerSideProps } from 'next';
 import type { Project } from '@prisma/client';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
@@ -18,6 +19,8 @@ interface ProjectsPageProps {
 }
 
 export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
+  const { t } = useTranslation('common');
+
   const formatPrice = (price: number) => {
     if (price >= 1000000) {
       return `฿${(price / 1000000).toFixed(1)}M`;
@@ -40,9 +43,9 @@ export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
         {/* Page Header */}
         <div className="bg-gradient-to-r from-secondary to-secondary-light text-white py-16">
           <div className="container mx-auto px-6">
-            <h1 className="text-4xl font-bold mb-4">Property Development Projects</h1>
+            <h1 className="text-4xl font-bold mb-4">{t('projects.pageTitle')}</h1>
             <p className="text-lg opacity-90">
-              Explore the latest real estate development projects in Pattaya
+              {t('projects.pageSubtitle')}
             </p>
           </div>
         </div>
@@ -52,13 +55,13 @@ export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
           {/* Error Display */}
           {error && (
             <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-              <p className="font-bold">Error loading projects:</p>
+              <p className="font-bold">{t('projects.errorLoading')}</p>
               <p>{error}</p>
             </div>
           )}
 
           <p className="text-text-secondary mb-8">
-            Showing <span className="font-semibold text-text-primary">{projects.length}</span> projects
+            {t('projects.showing')} <span className="font-semibold text-text-primary">{projects.length}</span> {t('projects.projectsCount')}
           </p>
 
           {projects.length > 0 ? (
@@ -100,25 +103,25 @@ export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
 
                   <div className="grid grid-cols-2 gap-4 mb-4 pb-4 border-b border-gray-200">
                     <div>
-                      <div className="text-xs text-text-muted mb-1">Developer</div>
+                      <div className="text-xs text-text-muted mb-1">{t('projects.developer')}</div>
                       <div className="text-sm font-semibold text-text-primary">
                         {project.developer}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-text-muted mb-1">Completion</div>
+                      <div className="text-xs text-text-muted mb-1">{t('projects.completion')}</div>
                       <div className="text-sm font-semibold text-text-primary">
                         {formatCompletion(project.completion)}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-text-muted mb-1">Units</div>
+                      <div className="text-xs text-text-muted mb-1">{t('projects.units')}</div>
                       <div className="text-sm font-semibold text-text-primary">
                         {project.units}
                       </div>
                     </div>
                     <div>
-                      <div className="text-xs text-text-muted mb-1">From</div>
+                      <div className="text-xs text-text-muted mb-1">{t('projects.from')}</div>
                       <div className="text-sm font-semibold text-primary">
                         {formatPrice(project.priceFrom)}
                       </div>
@@ -126,7 +129,7 @@ export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
                   </div>
 
                   <Button variant="text" size="sm" fullWidth>
-                    View Project Details →
+                    {t('projects.viewDetails')}
                   </Button>
                 </div>
               </Link>
@@ -134,7 +137,7 @@ export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
             </div>
           ) : (
             <p className="text-center text-text-muted py-12">
-              No projects available at the moment.
+              {t('projects.noProjects')}
             </p>
           )}
         </div>

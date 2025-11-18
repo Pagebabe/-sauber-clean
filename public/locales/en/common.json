@@ -300,6 +300,20 @@
     "ctaContactButton": "Contact Us",
     "ctaCallButton": "Call Now"
   },
+  "projects": {
+    "pageTitle": "Property Development Projects",
+    "pageSubtitle": "Explore the latest real estate development projects in Pattaya",
+    "errorLoading": "Error loading projects:",
+    "showing": "Showing",
+    "projectsCount": "projects",
+    "developer": "Developer",
+    "completion": "Completion",
+    "units": "Units",
+    "from": "From",
+    "viewDetails": "View Project Details →",
+    "noProjects": "No projects available at the moment.",
+    "errorMessage": "Unable to load projects. Please try again later."
+  },
   "footer": {
     "companyName": "PW Pattaya",
     "companyLegal": "Global Real Estate Co.,Ltd",
