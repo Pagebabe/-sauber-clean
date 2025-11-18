@@ -5,6 +5,7 @@
 import React, { useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import type { Property } from '@prisma/client';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { PropertyCard } from '@/components/property/PropertyCard';
@@ -187,7 +188,7 @@ export default function RentPage({ properties, error }: RentPageProps) {
 /**
  * Fetch properties for rent from API at request time
  */
-export const getServerSideProps: GetServerSideProps<RentPageProps> = async () => {
+export const getServerSideProps: GetServerSideProps<RentPageProps> = async (context) => {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/properties?listingType=rent`);
@@ -200,6 +201,7 @@ export const getServerSideProps: GetServerSideProps<RentPageProps> = async () =>
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         properties: data.properties || [],
       },
     };
@@ -208,6 +210,7 @@ export const getServerSideProps: GetServerSideProps<RentPageProps> = async () =>
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         properties: [],
         error: 'Unable to load properties. Please try again later.',
       },
