@@ -1,67 +1,29 @@
 /**
  * Admin Dashboard
- * Main dashboard for authenticated {t('admin.adminUser')}s
+ * Main dashboard for authenticated admins
  */
 
 import React from 'react';
 import type { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
-import { signOut, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { authOptions } from '../api/auth/[...nextauth]';
-import { Button } from '@/components/ui/Button';
+import { AdminLayout, AdminPageHeader, AdminPageContent } from '@/components/admin/AdminLayout';
 
 export default function AdminDashboard() {
   const { t } = useTranslation('common');
   const { data: session } = useSession();
 
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/admin/login' });
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">PW</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-text-primary">{t('admin.title')}</h1>
-                <p className="text-xs text-text-muted">{t('admin.subtitle')}</p>
-              </div>
-            </div>
+    <AdminLayout>
+      <AdminPageHeader
+        title={`${t('admin.welcomeBack')}, ${session?.user?.name}!`}
+        subtitle={t('admin.dashboardDescription')}
+      />
 
-            {/* User Menu */}
-            <div className="flex items-center gap-4">
-              <div className="text-right">
-                <p className="text-sm font-medium text-text-primary">{session?.user?.name}</p>
-                <p className="text-xs text-text-muted">{(session?.user as any)?.role}</p>
-              </div>
-              <Button variant="text" onClick={handleSignOut}>
-                {t('admin.signOut')}
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Welcome Section */}
-        <div className="mb-8">
-          <h2 className="text-2xl font-bold text-text-primary mb-2">
-            {t('admin.welcomeBack')}, {session?.user?.name}!
-          </h2>
-          <p className="text-text-muted">
-            {t('admin.dashboardDescription')}
-          </p>
-        </div>
+      <AdminPageContent>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
@@ -167,8 +129,8 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-      </main>
-    </div>
+      </AdminPageContent>
+    </AdminLayout>
   );
 }
 

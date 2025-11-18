@@ -7,10 +7,11 @@ import React, { useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { parseCSV, parseExcel, validateProperties, type ParsedProperty } from '@/lib/importParser';
+import { AdminLayout, AdminPageHeader, AdminPageContent } from '@/components/admin/AdminLayout';
+import { Button } from '@/components/ui/Button';
 
 type ImportStep = 'upload' | 'preview' | 'importing' | 'complete';
 
@@ -111,29 +112,21 @@ export default function AdminPropertyImportPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Import Properties</h1>
-              <p className="text-sm text-gray-500 mt-1">
-                Import properties from Google Sheets CSV or Excel file
-              </p>
-            </div>
-            <Link
-              href="/admin/properties"
-              className="px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors"
-            >
-              ← Back to Properties
-            </Link>
-          </div>
-        </div>
-      </div>
+    <AdminLayout>
+      <AdminPageHeader
+        title="Import Properties"
+        subtitle="Import properties from Google Sheets CSV or Excel file"
+        actions={
+          <Button
+            variant="secondary"
+            onClick={() => router.push('/admin/properties')}
+          >
+            ← Back to Properties
+          </Button>
+        }
+      />
 
-      {/* Main Content */}
-      <div className="container mx-auto px-6 py-8">
+      <AdminPageContent>
         {/* Step Indicator */}
         <div className="mb-8">
           <div className="flex items-center justify-center space-x-4">
@@ -363,8 +356,8 @@ export default function AdminPropertyImportPage() {
             </div>
           </div>
         )}
-      </div>
-    </div>
+      </AdminPageContent>
+    </AdminLayout>
   );
 }
 

@@ -6,11 +6,11 @@
 import React, { useEffect, useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
-import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { Button } from '@/components/ui/Button';
+import { AdminLayout, AdminPageHeader, AdminPageContent } from '@/components/admin/AdminLayout';
 
 interface Property {
   id: string;
@@ -27,7 +27,6 @@ interface Property {
 
 export default function AdminPropertiesPage() {
   const router = useRouter();
-  const { data: session } = useSession();
   const [properties, setProperties] = useState<Property[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -73,53 +72,13 @@ export default function AdminPropertiesPage() {
     }
   };
 
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/admin/login' });
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">PW</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-text-primary">PW Pattaya Admin</h1>
-                <p className="text-xs text-text-muted">Property Management</p>
-              </div>
-            </div>
-
-            {/* User Menu */}
-            <div className="flex items-center gap-4">
-              <Button variant="text" onClick={() => router.push('/admin/dashboard')}>
-                Dashboard
-              </Button>
-              <div className="text-right">
-                <p className="text-sm font-medium text-text-primary">{session?.user?.name}</p>
-                <p className="text-xs text-text-muted">{(session?.user as any)?.role}</p>
-              </div>
-              <Button variant="text" onClick={handleSignOut}>
-                Sign Out
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-text-primary mb-2">Properties</h2>
-            <p className="text-text-muted">Manage your property listings</p>
-          </div>
-          <div className="flex gap-3">
+    <AdminLayout>
+      <AdminPageHeader
+        title="Properties"
+        subtitle="Manage your property listings"
+        actions={
+          <>
             <Button
               variant="secondary"
               onClick={() => router.push('/admin/properties/import')}
@@ -132,9 +91,11 @@ export default function AdminPropertiesPage() {
             >
               + Add Property
             </Button>
-          </div>
-        </div>
+          </>
+        }
+      />
 
+      <AdminPageContent>
         {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -241,8 +202,8 @@ export default function AdminPropertiesPage() {
             </table>
           </div>
         )}
-      </main>
-    </div>
+      </AdminPageContent>
+    </AdminLayout>
   );
 }
 

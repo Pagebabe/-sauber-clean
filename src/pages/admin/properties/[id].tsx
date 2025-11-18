@@ -6,17 +6,16 @@
 import React, { useEffect, useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
-import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { PropertyFormTabs } from '@/components/admin/PropertyFormTabs';
+import { AdminLayout, AdminPageHeader, AdminPageContent } from '@/components/admin/AdminLayout';
+import { Button } from '@/components/ui/Button';
 
 export default function AdminPropertyFormPage() {
   const router = useRouter();
   const { id } = router.query;
-  const { data: session } = useSession();
   const isNew = id === 'new';
 
   const [isLoading, setIsLoading] = useState(!isNew);
@@ -296,41 +295,33 @@ export default function AdminPropertyFormPage() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading property...</p>
+      <AdminLayout>
+        <div className="flex items-center justify-center h-96">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading property...</p>
+          </div>
         </div>
-      </div>
+      </AdminLayout>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-200">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">
-                {isNew ? 'Add New Property' : 'Edit Property'}
-              </h1>
-              <p className="text-sm text-gray-500 mt-1">
-                {isNew ? 'Create a new property listing' : `Editing property ${id}`}
-              </p>
-            </div>
-            <Link
-              href="/admin/properties"
-              className="px-4 py-2 text-gray-700 hover:text-gray-900 transition-colors"
-            >
-              ← Back to Properties
-            </Link>
-          </div>
-        </div>
-      </div>
+    <AdminLayout>
+      <AdminPageHeader
+        title={isNew ? 'Add New Property' : 'Edit Property'}
+        subtitle={isNew ? 'Create a new property listing' : `Editing property ${id}`}
+        actions={
+          <Button
+            variant="secondary"
+            onClick={() => router.push('/admin/properties')}
+          >
+            ← Back to Properties
+          </Button>
+        }
+      />
 
-      {/* Main Content */}
-      <div className="container mx-auto px-6 py-8">
+      <AdminPageContent maxWidth="full">
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
             <p className="text-red-800 font-medium">Error</p>
@@ -345,8 +336,8 @@ export default function AdminPropertyFormPage() {
           isSaving={isSaving}
           isNew={isNew}
         />
-      </div>
-    </div>
+      </AdminPageContent>
+    </AdminLayout>
   );
 }
 

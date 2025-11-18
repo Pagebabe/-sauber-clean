@@ -6,11 +6,11 @@
 import React, { useEffect, useState } from 'react';
 import type { GetServerSideProps } from 'next';
 import { getServerSession } from 'next-auth';
-import { signOut, useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { authOptions } from '../../api/auth/[...nextauth]';
 import { Button } from '@/components/ui/Button';
+import { AdminLayout, AdminPageHeader, AdminPageContent } from '@/components/admin/AdminLayout';
 
 interface Project {
   id: string;
@@ -24,7 +24,6 @@ interface Project {
 
 export default function AdminProjectsPage() {
   const router = useRouter();
-  const { data: session } = useSession();
   const [projects, setProjects] = useState<Project[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
@@ -70,63 +69,22 @@ export default function AdminProjectsPage() {
     }
   };
 
-  const handleSignOut = () => {
-    signOut({ callbackUrl: '/admin/login' });
-  };
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Admin Header */}
-      <header className="bg-white border-b border-gray-200 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            {/* Logo */}
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-white font-bold text-lg">PW</span>
-              </div>
-              <div>
-                <h1 className="text-lg font-bold text-text-primary">PW Pattaya Admin</h1>
-                <p className="text-xs text-text-muted">Project Management</p>
-              </div>
-            </div>
-
-            {/* User Menu */}
-            <div className="flex items-center gap-4">
-              <Button variant="text" onClick={() => router.push('/admin/dashboard')}>
-                Dashboard
-              </Button>
-              <Button variant="text" onClick={() => router.push('/admin/properties')}>
-                Properties
-              </Button>
-              <div className="text-right">
-                <p className="text-sm font-medium text-text-primary">{session?.user?.name}</p>
-                <p className="text-xs text-text-muted">{(session?.user as any)?.role}</p>
-              </div>
-              <Button variant="text" onClick={handleSignOut}>
-                Sign Out
-              </Button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Page Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h2 className="text-2xl font-bold text-text-primary mb-2">Development Projects</h2>
-            <p className="text-text-muted">Manage condo and villa projects</p>
-          </div>
+    <AdminLayout>
+      <AdminPageHeader
+        title="Development Projects"
+        subtitle="Manage condo and villa projects"
+        actions={
           <Button
             variant="primary"
             onClick={() => router.push('/admin/projects/new')}
           >
             + Add Project
           </Button>
-        </div>
+        }
+      />
 
+      <AdminPageContent>
         {/* Error Message */}
         {error && (
           <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -219,8 +177,8 @@ export default function AdminProjectsPage() {
             </table>
           </div>
         )}
-      </main>
-    </div>
+      </AdminPageContent>
+    </AdminLayout>
   );
 }
 
