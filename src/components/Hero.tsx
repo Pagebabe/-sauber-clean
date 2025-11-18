@@ -43,11 +43,9 @@ export function Hero() {
 
   return (
     <div
-      className="relative min-h-[600px] flex items-center justify-center bg-gradient-to-br from-secondary to-secondary-light text-white"
+      className="relative min-h-[600px] flex items-center justify-center text-white"
       style={{
-        backgroundImage: 'linear-gradient(rgba(61, 90, 108, 0.85), rgba(61, 90, 108, 0.85)), url(/hero-bg.jpg)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
+        background: 'linear-gradient(135deg, rgb(61, 90, 108) 0%, rgb(77, 116, 138) 50%, rgb(61, 90, 108) 100%)',
       }}
     >
       <div className="container mx-auto px-6 py-32 text-center">
