@@ -1,0 +1,106 @@
+// Prisma Schema for PW Pattaya Real Estate
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// Property Model
+model Property {
+  id          String   @id @default(cuid())
+  title       String
+  titleDE     String?
+  titleTH     String?
+  titleRU     String?
+  titleFR     String?
+  description String   @db.Text
+  descriptionDE String? @db.Text
+  descriptionTH String? @db.Text
+  descriptionRU String? @db.Text
+  descriptionFR String? @db.Text
+  price       Int
+  location    String
+  bedrooms    Int
+  bathrooms   Int
+  area        Float
+  floor       Int?
+  propertyType String  // condo, house, villa, land
+  listingType  String  // sale, rent
+  status      String   @default("active") // active, sold, rented, pending
+  images      String[] // Array of image URLs
+  features    String[] // Array of features
+  latitude    Float?
+  longitude   Float?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([location])
+  @@index([propertyType])
+  @@index([listingType])
+  @@index([status])
+}
+
+// Project Model
+model Project {
+  id          String   @id @default(cuid())
+  name        String
+  nameDE      String?
+  nameTH      String?
+  nameRU      String?
+  nameFR      String?
+  location    String
+  developer   String
+  completion  String
+  units       Int
+  priceFrom   Int
+  description String   @db.Text
+  descriptionDE String? @db.Text
+  descriptionTH String? @db.Text
+  descriptionRU String? @db.Text
+  descriptionFR String? @db.Text
+  images      String[]
+  amenities   String[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([location])
+  @@index([developer])
+}
+
+// Lead/Contact Model
+model Lead {
+  id          String   @id @default(cuid())
+  name        String
+  email       String
+  phone       String
+  subject     String?
+  message     String   @db.Text
+  propertyId  String?
+  source      String   @default("website") // website, phone, email, social
+  status      String   @default("new") // new, contacted, qualified, converted, lost
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+  @@index([status])
+  @@index([propertyId])
+}
+
+// User Model (for admin)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String   // hashed
+  name      String
+  role      String   @default("agent") // admin, agent, manager
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+  @@index([role])
+}
