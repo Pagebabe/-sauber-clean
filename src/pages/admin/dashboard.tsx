@@ -138,26 +138,36 @@ export default function AdminDashboard() {
               <h4 className="font-semibold text-text-primary mb-1">Add Property</h4>
               <p className="text-sm text-text-muted">Create a new property listing</p>
             </a>
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left opacity-50 cursor-not-allowed">
+            <a
+              href="/admin/projects"
+              className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
+            >
+              <h4 className="font-semibold text-text-primary mb-1">Manage Projects</h4>
+              <p className="text-sm text-text-muted">View and edit development projects</p>
+            </a>
+            <a
+              href="/admin/projects/new"
+              className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
+            >
               <h4 className="font-semibold text-text-primary mb-1">Add Project</h4>
-              <p className="text-sm text-text-muted">Coming in Phase 6 Part 3</p>
-            </button>
+              <p className="text-sm text-text-muted">Create a new development project</p>
+            </a>
           </div>
         </div>
 
-        {/* Coming Soon Notice */}
-        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
+        {/* Status Notice */}
+        <div className="mt-8 bg-green-50 border border-green-200 rounded-xl p-6">
           <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
-              <svg className="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0">
+              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
             <div>
-              <h4 className="font-semibold text-blue-900 mb-1">Phase 6: Admin Panel in Development</h4>
-              <p className="text-sm text-blue-700">
-                Property management, project management, and lead management features are coming soon.
-                This dashboard currently displays static data from the database.
+              <h4 className="font-semibold text-green-900 mb-1">Phase 6 Parts 1-3: Admin Panel Active</h4>
+              <p className="text-sm text-green-700">
+                Property management and project management are fully functional with CRUD operations.
+                Lead management is coming in Part 4.
               </p>
             </div>
           </div>

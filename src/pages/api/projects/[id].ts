@@ -1,5 +1,5 @@
 /**
- * Projects API - CRUD operations for projects
+ * Project Detail API - CRUD operations for single project
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next';
@@ -11,48 +11,26 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  const { id } = req.query;
+
   if (req.method === 'GET') {
     try {
-      const { location, developer, limit = '50', offset = '0' } = req.query;
-
-      // Build where clause
-      const where: any = {};
-
-      if (location) {
-        where.location = location as string;
-      }
-
-      if (developer) {
-        where.developer = developer as string;
-      }
-
-      // Fetch projects
-      const projects = await prisma.project.findMany({
-        where,
-        take: parseInt(limit as string),
-        skip: parseInt(offset as string),
-        orderBy: {
-          createdAt: 'desc',
+      const project = await prisma.project.findUnique({
+        where: {
+          id: id as string,
         },
       });
 
-      // Count total
-      const total = await prisma.project.count({ where });
+      if (!project) {
+        return res.status(404).json({ error: 'Project not found' });
+      }
 
-      res.status(200).json({
-        projects,
-        pagination: {
-          total,
-          limit: parseInt(limit as string),
-          offset: parseInt(offset as string),
-          hasMore: parseInt(offset as string) + projects.length < total,
-        },
-      });
+      res.status(200).json(project);
     } catch (error) {
-      console.error('Error fetching projects:', error);
-      res.status(500).json({ error: 'Failed to fetch projects' });
+      console.error('Error fetching project:', error);
+      res.status(500).json({ error: 'Failed to fetch project' });
     }
-  } else if (req.method === 'POST') {
+  } else if (req.method === 'PUT') {
     // Check authentication
     const session = await getServerSession(req, res, authOptions);
     if (!session) {
@@ -62,8 +40,11 @@ export default async function handler(
     try {
       const projectData = req.body;
 
-      // Create project
-      const project = await prisma.project.create({
+      // Update project
+      const project = await prisma.project.update({
+        where: {
+          id: id as string,
+        },
         data: {
           name: projectData.name,
           nameDE: projectData.nameDE || null,
@@ -85,10 +66,29 @@ export default async function handler(
         },
       });
 
-      res.status(201).json(project);
+      res.status(200).json(project);
     } catch (error) {
-      console.error('Error creating project:', error);
-      res.status(500).json({ error: 'Failed to create project' });
+      console.error('Error updating project:', error);
+      res.status(500).json({ error: 'Failed to update project' });
+    }
+  } else if (req.method === 'DELETE') {
+    // Check authentication
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+      await prisma.project.delete({
+        where: {
+          id: id as string,
+        },
+      });
+
+      res.status(200).json({ message: 'Project deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting project:', error);
+      res.status(500).json({ error: 'Failed to delete project' });
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' });
