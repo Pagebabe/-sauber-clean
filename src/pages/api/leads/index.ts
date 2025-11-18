@@ -4,6 +4,7 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '@/lib/prisma';
+import { sendLeadNotification } from '@/lib/email';
 
 export default async function handler(
   req: NextApiRequest,
@@ -11,7 +12,7 @@ export default async function handler(
 ) {
   if (req.method === 'POST') {
     try {
-      const { name, email, phone, subject, message, propertyId } = req.body;
+      const { name, email, phone, subject, message, propertyId, source } = req.body;
 
       // Validation
       if (!name || !email || !phone || !message) {
@@ -27,9 +28,14 @@ export default async function handler(
           subject: subject || null,
           message,
           propertyId: propertyId || null,
-          source: 'website',
+          source: source || 'website',
           status: 'new',
         },
+      });
+
+      // Send email notification (fire and forget - don't wait)
+      sendLeadNotification(lead).catch((error) => {
+        console.error('Failed to send email notification:', error);
       });
 
       res.status(201).json({ success: true, lead });
