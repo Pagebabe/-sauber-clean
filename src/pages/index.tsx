@@ -5,6 +5,7 @@ import { PropertyCard } from '@/components/property/PropertyCard';
 import { Button } from '@/components/ui/Button';
 import type { GetServerSideProps } from 'next';
 import type { Property } from '@prisma/client';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 
 interface HomeProps {
   properties: Property[];
@@ -79,7 +80,7 @@ export default function Home({ properties, error }: HomeProps) {
 /**
  * Fetch properties from API at request time
  */
-export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
+export const getServerSideProps: GetServerSideProps<HomeProps> = async (context) => {
   try {
     // Fetch properties for sale from API
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
@@ -93,6 +94,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         properties: data.properties || [],
       },
     };
@@ -102,6 +104,7 @@ export const getServerSideProps: GetServerSideProps<HomeProps> = async () => {
     // Return empty array with error message if API fails
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         properties: [],
         error: 'Unable to load properties. Please try again later.',
       },
