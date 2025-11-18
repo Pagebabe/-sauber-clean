@@ -3,99 +3,32 @@
  */
 
 import React from 'react';
+import type { GetServerSideProps } from 'next';
+import type { Project } from '@prisma/client';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 
-interface Project {
-  id: string;
-  name: string;
-  location: string;
-  developer: string;
-  completion: string;
-  units: number;
-  priceFrom: number;
-  image: string;
-  description: string;
+interface ProjectsPageProps {
+  projects: Project[];
+  error?: string;
 }
 
-const mockProjects: Project[] = [
-  {
-    id: 'PROJ-001',
-    name: 'The Riviera Wongamat',
-    location: 'Wongamat Beach',
-    developer: 'Riviera Group',
-    completion: '2025 Q2',
-    units: 484,
-    priceFrom: 3500000,
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
-    description: 'Luxury beachfront development with world-class amenities',
-  },
-  {
-    id: 'PROJ-002',
-    name: 'Reflection Jomtien',
-    location: 'Jomtien',
-    developer: 'Nova Group',
-    completion: '2025 Q4',
-    units: 928,
-    priceFrom: 2200000,
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
-    description: 'Modern high-rise condominium with sea views',
-  },
-  {
-    id: 'PROJ-003',
-    name: 'The Base Central Pattaya',
-    location: 'Central Pattaya',
-    developer: 'Sansiri',
-    completion: '2024 Q4',
-    units: 1112,
-    priceFrom: 1800000,
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
-    description: 'Urban lifestyle condominium in the heart of Pattaya',
-  },
-  {
-    id: 'PROJ-004',
-    name: 'Aeras Condo',
-    location: 'Jomtien',
-    developer: 'Raimon Land',
-    completion: '2026 Q1',
-    units: 648,
-    priceFrom: 2900000,
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
-    description: 'Premium beachfront living with panoramic views',
-  },
-  {
-    id: 'PROJ-005',
-    name: 'Grand Solaire',
-    location: 'Naklua',
-    developer: 'Grand Unity',
-    completion: '2025 Q3',
-    units: 756,
-    priceFrom: 4200000,
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-    description: 'Sophisticated waterfront residence with resort facilities',
-  },
-  {
-    id: 'PROJ-006',
-    name: 'The Palm',
-    location: 'Wongamat',
-    developer: 'Wongamat Beach',
-    completion: '2024 Q3',
-    units: 525,
-    priceFrom: 5600000,
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
-    description: 'Exclusive beachfront condominium with private beach access',
-  },
-];
-
-export default function ProjectsPage() {
+export default function ProjectsPage({ projects, error }: ProjectsPageProps) {
   const formatPrice = (price: number) => {
     if (price >= 1000000) {
       return `฿${(price / 1000000).toFixed(1)}M`;
     }
     return `฿${price.toLocaleString()}`;
+  };
+
+  const formatCompletion = (date: Date | string) => {
+    const d = new Date(date);
+    const year = d.getFullYear();
+    const quarter = Math.ceil((d.getMonth() + 1) / 3);
+    return `${year} Q${quarter}`;
   };
 
   return (
@@ -115,12 +48,21 @@ export default function ProjectsPage() {
 
         {/* Projects Grid */}
         <div className="container mx-auto px-6 py-12">
+          {/* Error Display */}
+          {error && (
+            <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+              <p className="font-bold">Error loading projects:</p>
+              <p>{error}</p>
+            </div>
+          )}
+
           <p className="text-text-secondary mb-8">
-            Showing <span className="font-semibold text-text-primary">{mockProjects.length}</span> projects
+            Showing <span className="font-semibold text-text-primary">{projects.length}</span> projects
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {mockProjects.map((project) => (
+          {projects.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects.map((project) => (
               <Link
                 key={project.id}
                 href={`/project/${project.id}`}
@@ -130,7 +72,7 @@ export default function ProjectsPage() {
                 {/* Project Image */}
                 <div className="relative h-56 overflow-hidden bg-gray-100">
                   <Image
-                    src={project.image}
+                    src={project.images[0] || '/placeholder.jpg'}
                     alt={project.name}
                     fill
                     className="object-cover transform group-hover:scale-110 transition-transform duration-500"
@@ -165,7 +107,7 @@ export default function ProjectsPage() {
                     <div>
                       <div className="text-xs text-text-muted mb-1">Completion</div>
                       <div className="text-sm font-semibold text-text-primary">
-                        {project.completion}
+                        {formatCompletion(project.completion)}
                       </div>
                     </div>
                     <div>
@@ -188,7 +130,12 @@ export default function ProjectsPage() {
                 </div>
               </Link>
             ))}
-          </div>
+            </div>
+          ) : (
+            <p className="text-center text-text-muted py-12">
+              No projects available at the moment.
+            </p>
+          )}
         </div>
       </main>
 
@@ -196,3 +143,34 @@ export default function ProjectsPage() {
     </div>
   );
 }
+
+/**
+ * Fetch projects from API at request time
+ */
+export const getServerSideProps: GetServerSideProps<ProjectsPageProps> = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/projects`);
+
+    if (!response.ok) {
+      throw new Error(`API returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return {
+      props: {
+        projects: data.projects || [],
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching projects:', error);
+
+    return {
+      props: {
+        projects: [],
+        error: 'Unable to load projects. Please try again later.',
+      },
+    };
+  }
+};
