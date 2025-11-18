@@ -4,6 +4,7 @@
 
 import React from 'react';
 import type { GetStaticProps } from 'next';
+import Link from 'next/link';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useTranslation } from 'next-i18next';
 import { Header } from '@/components/layout/Header';
@@ -127,10 +128,11 @@ export default function ServicesPage() {
         <div className="container mx-auto px-6 py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
             {services.map((service) => (
-              <div
+              <Link
                 key={service.id}
+                href={`/services/${service.id}`}
+                className="block bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-8"
                 data-testid="service-card"
-                className="bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 p-8"
               >
                 {/* Icon */}
                 <div className="text-6xl mb-4">{service.icon}</div>
@@ -159,7 +161,7 @@ export default function ServicesPage() {
                 <Button variant="text" size="sm" fullWidth>
                   {t('services.learnMore')}
                 </Button>
-              </div>
+              </Link>
             ))}
           </div>
 
