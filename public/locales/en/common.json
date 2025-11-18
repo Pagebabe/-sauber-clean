@@ -314,6 +314,40 @@
     "noProjects": "No projects available at the moment.",
     "errorMessage": "Unable to load projects. Please try again later."
   },
+  "propertyDetail": {
+    "notFoundTitle": "Property Not Found",
+    "notFoundMessage": "The property you're looking for doesn't exist.",
+    "backToHome": "Back to Home",
+    "errorLoading": "Error loading property:",
+    "unknownError": "Unknown error",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "livingArea": "Living Area",
+    "floor": "Floor",
+    "level": "Level",
+    "descriptionTitle": "Description",
+    "descriptionText": "This beautiful property offers an exceptional living experience in the heart of {location}. With {bedrooms} spacious bedrooms and {bathrooms} modern bathrooms, this {area}m² residence provides ample space for comfortable living. Perfect for those seeking a premium lifestyle in Pattaya's most desirable location.",
+    "featuresTitle": "Features & Amenities",
+    "featureAirConditioning": "Air Conditioning",
+    "featurePool": "Swimming Pool",
+    "featureSecurity": "24/7 Security",
+    "featureParking": "Parking",
+    "featureFitness": "Fitness Center",
+    "featureInternet": "High-Speed Internet",
+    "contactTitle": "Contact Agent",
+    "formName": "Name",
+    "formNamePlaceholder": "Your name",
+    "formEmail": "Email",
+    "formEmailPlaceholder": "your@email.com",
+    "formPhone": "Phone",
+    "formPhonePlaceholder": "+66 XX XXX XXXX",
+    "formMessage": "Message",
+    "formMessagePlaceholder": "I'm interested in this property...",
+    "formSubmit": "Send Inquiry",
+    "formSuccess": "Thank you for your inquiry! We will contact you soon.",
+    "orContactDirect": "Or contact us directly:",
+    "errorMessage": "Unable to load property. Please try again later."
+  },
   "footer": {
     "companyName": "PW Pattaya",
     "companyLegal": "Global Real Estate Co.,Ltd",
@@ -370,5 +404,23 @@
     "errorOccurred": "An error occurred. Please try again.",
     "backToWebsite": "← Back to Website",
     "devCredentials": "Development Credentials:"
+  },
+  "error404": {
+    "title": "Page Not Found",
+    "message": "Oops! The page you're looking for doesn't exist. It might have been moved or deleted.",
+    "goHome": "Go to Homepage",
+    "browseProperties": "Browse Properties",
+    "popularPages": "Or try one of these popular pages:",
+    "rentProperties": "Rent Properties",
+    "projects": "Projects",
+    "aboutUs": "About Us",
+    "contact": "Contact"
+  },
+  "error500": {
+    "title": "Internal Server Error",
+    "message": "Something went wrong on our end. We're working to fix the issue. Please try again later.",
+    "goHome": "Go to Homepage",
+    "reloadPage": "Reload Page",
+    "persistMessage": "If the problem persists, please contact us:"
   }
 }

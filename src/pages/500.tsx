@@ -3,12 +3,16 @@
  */
 
 import React from 'react';
+import type { GetStaticProps } from 'next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import Link from 'next/link';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { Button } from '@/components/ui/Button';
 
 export default function ServerErrorPage() {
+  const { t } = useTranslation('common');
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <Header />
@@ -22,17 +26,17 @@ export default function ServerErrorPage() {
 
           {/* Error Message */}
           <h1 className="text-4xl font-bold text-text-primary mb-4">
-            Internal Server Error
+            {t('error500.title')}
           </h1>
           <p className="text-lg text-text-secondary mb-8">
-            Something went wrong on our end. We're working to fix the issue. Please try again later.
+            {t('error500.message')}
           </p>
 
           {/* Action Buttons */}
           <div className="flex gap-4 justify-center flex-wrap">
             <Link href="/">
               <Button variant="primary" size="lg">
-                Go to Homepage
+                {t('error500.goHome')}
               </Button>
             </Link>
             <Button
@@ -40,14 +44,14 @@ export default function ServerErrorPage() {
               size="lg"
               onClick={() => window.location.reload()}
             >
-              Reload Page
+              {t('error500.reloadPage')}
             </Button>
           </div>
 
           {/* Contact Support */}
           <div className="mt-12 pt-8 border-t border-gray-200">
             <p className="text-sm text-text-muted mb-4">
-              If the problem persists, please contact us:
+              {t('error500.persistMessage')}
             </p>
             <div className="flex gap-6 justify-center text-sm">
               <a
@@ -73,3 +77,11 @@ export default function ServerErrorPage() {
     </div>
   );
 }
+
+export const getStaticProps: GetStaticProps = async ({ locale }) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common'])),
+    },
+  };
+};
