@@ -1,14 +1,46 @@
 @import "tailwindcss";
 
 :root {
+  /* PW Pattaya Brand Colors (from website analysis) */
+  --primary: #5a8cc0;
+  --primary-light: #6b9fcc;
+  --primary-dark: #4a7099;
+  --secondary: #3d5a6c;
+  --secondary-light: #5a7a8f;
+  --secondary-dark: #2a3f4f;
+  --accent: #1a2c3d;
+
+  /* Text Colors */
+  --text-primary: #313131;
+  --text-secondary: #565858;
+  --text-muted: #959697;
+
+  /* Background */
   --background: #ffffff;
+  --background-secondary: #f5f5f5;
   --foreground: #171717;
 }
 
 @theme inline {
+  /* Colors */
+  --color-primary: var(--primary);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  --color-secondary: var(--secondary);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  --color-accent: var(--accent);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+
   --color-background: var(--background);
+  --color-background-secondary: var(--background-secondary);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+
+  /* Typography - PW Pattaya uses Muller font */
+  --font-sans: 'Muller', 'Helvetica', 'Arial', sans-serif;
   --font-mono: var(--font-geist-mono);
 }
 
