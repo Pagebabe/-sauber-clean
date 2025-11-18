@@ -3,14 +3,20 @@
  */
 
 import React, { useState } from 'react';
+import type { GetServerSideProps } from 'next';
+import type { Property } from '@prisma/client';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
 import { PropertyCard } from '@/components/property/PropertyCard';
 import { Select } from '@/components/ui/Select';
 import { Button } from '@/components/ui/Button';
-import { mockProperties } from '@/lib/mockData';
 
-export default function BuyPage() {
+interface BuyPageProps {
+  properties: Property[];
+  error?: string;
+}
+
+export default function BuyPage({ properties, error }: BuyPageProps) {
   const [location, setLocation] = useState('');
   const [propertyType, setPropertyType] = useState('');
   const [priceRange, setPriceRange] = useState('');
@@ -114,9 +120,17 @@ export default function BuyPage() {
 
         {/* Results Section */}
         <div className="container mx-auto px-6 py-12">
+          {/* Error Display */}
+          {error && (
+            <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+              <p className="font-bold">Error loading properties:</p>
+              <p>{error}</p>
+            </div>
+          )}
+
           <div className="flex justify-between items-center mb-6">
             <p className="text-text-secondary">
-              Showing <span className="font-semibold text-text-primary">{mockProperties.length}</span> properties
+              Showing <span className="font-semibold text-text-primary">{properties.length}</span> properties
             </p>
             <Select
               options={[
@@ -132,11 +146,17 @@ export default function BuyPage() {
           </div>
 
           {/* Property Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {mockProperties.map((property) => (
-              <PropertyCard key={property.id} property={property} />
-            ))}
-          </div>
+          {properties.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+              {properties.map((property) => (
+                <PropertyCard key={property.id} property={property} />
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-text-muted py-12">
+              No properties found. Try adjusting your filters.
+            </p>
+          )}
 
           {/* Pagination */}
           <div className="flex justify-center gap-2">
@@ -163,3 +183,34 @@ export default function BuyPage() {
     </div>
   );
 }
+
+/**
+ * Fetch properties for sale from API at request time
+ */
+export const getServerSideProps: GetServerSideProps<BuyPageProps> = async () => {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/properties?listingType=sale`);
+
+    if (!response.ok) {
+      throw new Error(`API returned ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    return {
+      props: {
+        properties: data.properties || [],
+      },
+    };
+  } catch (error) {
+    console.error('Error fetching properties:', error);
+
+    return {
+      props: {
+        properties: [],
+        error: 'Unable to load properties. Please try again later.',
+      },
+    };
+  }
+};
