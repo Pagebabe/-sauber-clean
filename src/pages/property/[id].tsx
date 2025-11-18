@@ -7,6 +7,7 @@ import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import type { Property } from '@prisma/client';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -20,6 +21,7 @@ interface PropertyDetailPageProps {
 
 export default function PropertyDetailPage({ property, error }: PropertyDetailPageProps) {
   const router = useRouter();
+  const { t } = useTranslation('common');
 
   const [formData, setFormData] = useState({
     name: '',
@@ -33,10 +35,10 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
       <div className="min-h-screen bg-background flex flex-col">
         <Header />
         <main className="flex-1 container mx-auto px-6 py-16 text-center">
-          <h1 className="text-3xl font-bold text-text-primary mb-4">Property Not Found</h1>
-          <p className="text-text-secondary mb-8">The property you're looking for doesn't exist.</p>
+          <h1 className="text-3xl font-bold text-text-primary mb-4">{t('propertyDetail.notFoundTitle')}</h1>
+          <p className="text-text-secondary mb-8">{t('propertyDetail.notFoundMessage')}</p>
           <Button variant="primary" onClick={() => router.push('/')}>
-            Back to Home
+            {t('propertyDetail.backToHome')}
           </Button>
         </main>
         <Footer />
@@ -50,12 +52,12 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
         <Header />
         <main className="flex-1 container mx-auto px-6 py-16 text-center">
           <div className="mb-8 p-4 bg-red-100 border border-red-400 text-red-700 rounded inline-block">
-            <p className="font-bold">Error loading property:</p>
-            <p>{error || 'Unknown error'}</p>
+            <p className="font-bold">{t('propertyDetail.errorLoading')}</p>
+            <p>{error || t('propertyDetail.unknownError')}</p>
           </div>
           <div className="mt-8">
             <Button variant="primary" onClick={() => router.push('/')}>
-              Back to Home
+              {t('propertyDetail.backToHome')}
             </Button>
           </div>
         </main>
@@ -74,7 +76,7 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Contact form submitted:', formData);
-    alert('Thank you for your inquiry! We will contact you soon.');
+    alert(t('propertyDetail.formSuccess'));
     setFormData({ name: '', email: '', phone: '', message: '' });
   };
 
@@ -133,65 +135,67 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
                 <div className="text-center">
                   <div className="text-3xl mb-2">🛏️</div>
                   <div className="font-semibold text-text-primary">{property.bedrooms}</div>
-                  <div className="text-sm text-text-muted">Bedrooms</div>
+                  <div className="text-sm text-text-muted">{t('propertyDetail.bedrooms')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl mb-2">🚿</div>
                   <div className="font-semibold text-text-primary">{property.bathrooms}</div>
-                  <div className="text-sm text-text-muted">Bathrooms</div>
+                  <div className="text-sm text-text-muted">{t('propertyDetail.bathrooms')}</div>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl mb-2">📐</div>
                   <div className="font-semibold text-text-primary">{property.area} m²</div>
-                  <div className="text-sm text-text-muted">Living Area</div>
+                  <div className="text-sm text-text-muted">{t('propertyDetail.livingArea')}</div>
                 </div>
                 {property.floor && (
                   <div className="text-center">
                     <div className="text-3xl mb-2">🏢</div>
-                    <div className="font-semibold text-text-primary">Floor {property.floor}</div>
-                    <div className="text-sm text-text-muted">Level</div>
+                    <div className="font-semibold text-text-primary">{t('propertyDetail.floor')} {property.floor}</div>
+                    <div className="text-sm text-text-muted">{t('propertyDetail.level')}</div>
                   </div>
                 )}
               </div>
 
               {/* Description */}
               <div className="mb-8" data-testid="property-description">
-                <h2 className="text-2xl font-bold text-text-primary mb-4">Description</h2>
+                <h2 className="text-2xl font-bold text-text-primary mb-4">{t('propertyDetail.descriptionTitle')}</h2>
                 <p className="text-text-secondary leading-relaxed">
-                  This beautiful property offers an exceptional living experience in the heart of {property.location}.
-                  With {property.bedrooms} spacious bedrooms and {property.bathrooms} modern bathrooms, this {property.area}m²
-                  residence provides ample space for comfortable living. Perfect for those seeking a premium lifestyle
-                  in Pattaya's most desirable location.
+                  {t('propertyDetail.descriptionText', {
+                    location: property.location,
+                    bedrooms: property.bedrooms,
+                    bathrooms: property.bathrooms,
+                    area: property.area
+                  })}
                 </p>
               </div>
 
               {/* Features */}
               <div className="mb-8">
-                <h2 className="text-2xl font-bold text-text-primary mb-4">Features & Amenities</h2>
+                <h2 className="text-2xl font-bold text-text-primary mb-4">{t('propertyDetail.featuresTitle')}</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
-                    <span className="text-text-secondary">Air Conditioning</span>
+                    <span className="text-text-secondary">{t('propertyDetail.featureAirConditioning')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
-                    <span className="text-text-secondary">Swimming Pool</span>
+                    <span className="text-text-secondary">{t('propertyDetail.featurePool')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
-                    <span className="text-text-secondary">24/7 Security</span>
+                    <span className="text-text-secondary">{t('propertyDetail.featureSecurity')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
-                    <span className="text-text-secondary">Parking</span>
+                    <span className="text-text-secondary">{t('propertyDetail.featureParking')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
-                    <span className="text-text-secondary">Fitness Center</span>
+                    <span className="text-text-secondary">{t('propertyDetail.featureFitness')}</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-green-500">✓</span>
-                    <span className="text-text-secondary">High-Speed Internet</span>
+                    <span className="text-text-secondary">{t('propertyDetail.featureInternet')}</span>
                   </div>
                 </div>
               </div>
@@ -200,31 +204,31 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
             {/* Right Column - Contact Form */}
             <div className="lg:col-span-1">
               <div className="bg-white rounded-lg shadow-lg p-6 sticky top-24">
-                <h2 className="text-2xl font-bold text-text-primary mb-6">Contact Agent</h2>
+                <h2 className="text-2xl font-bold text-text-primary mb-6">{t('propertyDetail.contactTitle')}</h2>
                 <form onSubmit={handleSubmit} data-testid="contact-form">
                   <div className="space-y-4">
                     <Input
-                      label="Name"
+                      label={t('propertyDetail.formName')}
                       type="text"
-                      placeholder="Your name"
+                      placeholder={t('propertyDetail.formNamePlaceholder')}
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
                       fullWidth
                     />
                     <Input
-                      label="Email"
+                      label={t('propertyDetail.formEmail')}
                       type="email"
-                      placeholder="your@email.com"
+                      placeholder={t('propertyDetail.formEmailPlaceholder')}
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
                       fullWidth
                     />
                     <Input
-                      label="Phone"
+                      label={t('propertyDetail.formPhone')}
                       type="tel"
-                      placeholder="+66 XX XXX XXXX"
+                      placeholder={t('propertyDetail.formPhonePlaceholder')}
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       required
@@ -232,26 +236,26 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
                     />
                     <div>
                       <label className="block text-sm font-medium text-text-primary mb-2">
-                        Message
+                        {t('propertyDetail.formMessage')}
                       </label>
                       <textarea
                         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all resize-none"
                         rows={4}
-                        placeholder="I'm interested in this property..."
+                        placeholder={t('propertyDetail.formMessagePlaceholder')}
                         value={formData.message}
                         onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                         required
                       />
                     </div>
                     <Button type="submit" variant="primary" size="lg" fullWidth>
-                      Send Inquiry
+                      {t('propertyDetail.formSubmit')}
                     </Button>
                   </div>
                 </form>
 
                 <div className="mt-6 pt-6 border-t border-gray-200">
                   <p className="text-sm text-text-muted text-center">
-                    Or contact us directly:
+                    {t('propertyDetail.orContactDirect')}
                   </p>
                   <div className="mt-4 space-y-2">
                     <div className="flex items-center gap-2 text-sm text-text-secondary">
@@ -316,7 +320,7 @@ export const getServerSideProps: GetServerSideProps<PropertyDetailPageProps> = a
       props: {
         ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         property: null,
-        error: 'Unable to load property. Please try again later.',
+        error: 'errorMessage',
       },
     };
   }
