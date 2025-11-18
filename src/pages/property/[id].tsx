@@ -6,6 +6,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import type { GetServerSideProps } from 'next';
 import type { Property } from '@prisma/client';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Image from 'next/image';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -292,6 +293,7 @@ export const getServerSideProps: GetServerSideProps<PropertyDetailPageProps> = a
       if (response.status === 404) {
         return {
           props: {
+            ...(await serverSideTranslations(context.locale || 'en', ['common'])),
             property: null,
           },
         };
@@ -303,6 +305,7 @@ export const getServerSideProps: GetServerSideProps<PropertyDetailPageProps> = a
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         property,
       },
     };
@@ -311,6 +314,7 @@ export const getServerSideProps: GetServerSideProps<PropertyDetailPageProps> = a
 
     return {
       props: {
+        ...(await serverSideTranslations(context.locale || 'en', ['common'])),
         property: null,
         error: 'Unable to load property. Please try again later.',
       },
