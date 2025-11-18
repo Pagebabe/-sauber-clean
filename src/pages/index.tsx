@@ -1,11 +1,12 @@
 import { Header } from '@/components/layout/Header';
+import { Footer } from '@/components/layout/Footer';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <Header />
 
-      <main className="container mx-auto px-6 py-16">
+      <main className="flex-1 container mx-auto px-6 py-16">
         <h1 className="text-4xl font-bold text-text-primary mb-4">
           PW Pattaya Global Real Estate Co.,Ltd
         </h1>
@@ -20,6 +21,8 @@ export default function Home() {
           </p>
         </div>
       </main>
+
+      <Footer />
     </div>
   );
 }
