@@ -11,29 +11,53 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 Starting database seed...');
 
-  // Clear existing data
-  console.log('🗑️  Clearing existing data...');
-  await prisma.lead.deleteMany();
-  await prisma.property.deleteMany();
-  await prisma.project.deleteMany();
-  await prisma.user.deleteMany();
+  // Check if this is production
+  const isProduction = process.env.NODE_ENV === 'production';
+
+  if (!isProduction) {
+    // Clear existing data only in development
+    console.log('🗑️  Clearing existing data (development mode)...');
+    await prisma.lead.deleteMany();
+    await prisma.property.deleteMany();
+    await prisma.project.deleteMany();
+    await prisma.user.deleteMany();
+  } else {
+    console.log('⚠️  Production mode - skipping data clear');
+  }
 
   // Create Admin User
   console.log('👤 Creating admin user...');
-  const hashedPassword = await bcrypt.hash('admin123', 10);
-  const admin = await prisma.user.create({
-    data: {
-      email: 'admin@pw-pattaya.com',
+  const adminEmail = process.env.ADMIN_EMAIL || 'admin@pw-pattaya.com';
+  const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+
+  const hashedPassword = await bcrypt.hash(adminPassword, 10);
+
+  // Use upsert in production to avoid errors if user exists
+  const admin = await prisma.user.upsert({
+    where: { email: adminEmail },
+    update: {}, // Don't update if exists
+    create: {
+      email: adminEmail,
       name: 'Admin User',
       password: hashedPassword,
       role: 'admin',
     },
   });
 
-  // Create Properties
-  console.log('🏠 Creating properties...');
+  console.log(`✅ Admin user: ${admin.email}`);
+  if (!isProduction) {
+    console.log(`🔐 Password: ${adminPassword}`);
+  }
+  console.log('⚠️  IMPORTANT: Change password after first login!');
 
-  const properties = await prisma.property.createMany({
+  // Create Properties (only in development)
+  let propertiesCount = 0;
+  let projectsCount = 0;
+
+  if (!isProduction) {
+    console.log('🏠 Creating sample properties...');
+
+    const properties = await prisma.property.createMany({
     data: [
       // Condos for Sale
       {
@@ -237,14 +261,15 @@ async function main() {
         longitude: 100.8950,
       },
     ],
-  });
+    });
 
-  console.log(`✅ Created ${properties.count} properties`);
+    propertiesCount = properties.count;
+    console.log(`✅ Created ${properties.count} sample properties`);
 
-  // Create Projects
-  console.log('🏗️  Creating projects...');
+    // Create Projects
+    console.log('🏗️  Creating sample projects...');
 
-  const projects = await prisma.project.createMany({
+    const projects = await prisma.project.createMany({
     data: [
       {
         name: 'The Riviera Wongamat',
@@ -295,15 +320,24 @@ async function main() {
         amenities: ['Lagoon Pool', 'Beach Access', 'Restaurant', 'Spa', 'Gym'],
       },
     ],
-  });
+    });
 
-  console.log(`✅ Created ${projects.count} projects`);
+    projectsCount = projects.count;
+    console.log(`✅ Created ${projects.count} sample projects`);
+  } else {
+    console.log('⚠️  Production mode - skipping sample data creation');
+    console.log('💡 Add properties and projects through the admin panel');
+  }
 
   console.log('✅ Database seeded successfully!');
   console.log(`📊 Summary:`);
-  console.log(`   - Properties: ${properties.count}`);
-  console.log(`   - Projects: ${projects.count}`);
-  console.log(`   - Users: 1 admin`);
+  console.log(`   - Admin User: ✅ Created/Updated`);
+  if (!isProduction) {
+    console.log(`   - Properties: ${propertiesCount}`);
+    console.log(`   - Projects: ${projectsCount}`);
+  } else {
+    console.log(`   - Sample Data: Skipped (Production Mode)`);
+  }
 }
 
 main()
