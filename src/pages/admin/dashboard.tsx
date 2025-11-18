@@ -132,13 +132,6 @@ export default function AdminDashboard() {
               <p className="text-sm text-text-muted">View, edit, and delete properties</p>
             </a>
             <a
-              href="/admin/properties/new"
-              className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
-            >
-              <h4 className="font-semibold text-text-primary mb-1">Add Property</h4>
-              <p className="text-sm text-text-muted">Create a new property listing</p>
-            </a>
-            <a
               href="/admin/projects"
               className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
             >
@@ -146,11 +139,11 @@ export default function AdminDashboard() {
               <p className="text-sm text-text-muted">View and edit development projects</p>
             </a>
             <a
-              href="/admin/projects/new"
+              href="/admin/leads"
               className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
             >
-              <h4 className="font-semibold text-text-primary mb-1">Add Project</h4>
-              <p className="text-sm text-text-muted">Create a new development project</p>
+              <h4 className="font-semibold text-text-primary mb-1">Manage Leads</h4>
+              <p className="text-sm text-text-muted">View and respond to customer inquiries</p>
             </a>
           </div>
         </div>
@@ -164,10 +157,10 @@ export default function AdminDashboard() {
               </svg>
             </div>
             <div>
-              <h4 className="font-semibold text-green-900 mb-1">Phase 6 Parts 1-3: Admin Panel Active</h4>
+              <h4 className="font-semibold text-green-900 mb-1">🎉 Phase 6 COMPLETE: Full Admin Panel Active!</h4>
               <p className="text-sm text-green-700">
-                Property management and project management are fully functional with CRUD operations.
-                Lead management is coming in Part 4.
+                All admin features are now live: Property CRUD, Project CRUD, and Lead Management.
+                The admin panel is production-ready!
               </p>
             </div>
           </div>
