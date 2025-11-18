@@ -11,35 +11,40 @@
  * <Header />
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
+import { Sidebar } from './Sidebar';
 
 export function Header() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
-    <header className="h-20 bg-gradient-to-r from-secondary to-secondary-light text-white border-b border-white/10 shadow-xl">
-      <div className="container mx-auto h-full flex items-center justify-between px-6">
-        {/* Left: Hamburger (Mobile) + Logo + Navigation */}
-        <div className="flex items-center gap-6">
-          {/* Hamburger Menu (Mobile only) */}
-          <button
-            data-testid="hamburger-menu"
-            className="lg:hidden w-12 h-12 bg-white/10 hover:bg-white/20 rounded-2xl flex items-center justify-center"
-            aria-label="Open menu"
-          >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+    <>
+      <header className="h-20 bg-gradient-to-r from-secondary to-secondary-light text-white border-b border-white/10 shadow-xl">
+        <div className="container mx-auto h-full flex items-center justify-between px-6">
+          {/* Left: Hamburger (Mobile) + Logo + Navigation */}
+          <div className="flex items-center gap-6">
+            {/* Hamburger Menu (Mobile only) */}
+            <button
+              data-testid="hamburger-menu"
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden w-12 h-12 bg-white/10 hover:bg-white/20 rounded-2xl flex items-center justify-center"
+              aria-label="Open menu"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          </button>
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M4 6h16M4 12h16M4 18h16"
+                />
+              </svg>
+            </button>
 
           {/* Logo */}
           <Link
@@ -90,5 +95,9 @@ export function Header() {
         </div>
       </div>
     </header>
+
+      {/* Mobile Sidebar */}
+      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
+    </>
   );
 }
