@@ -1,0 +1,51 @@
+{
+  "nav": {
+    "home": "Home",
+    "buy": "Buy",
+    "rent": "Rent",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "services": "Services",
+    "faq": "FAQ"
+  },
+  "hero": {
+    "title": "Find Your Dream Property in Pattaya",
+    "subtitle": "Discover luxury condos, villas, and houses in Thailand's premier beach destination",
+    "searchPlaceholder": "Search location, property type...",
+    "searchButton": "Search Properties"
+  },
+  "footer": {
+    "company": {
+      "title": "PW Pattaya Real Estate",
+      "description": "Your trusted partner for property in Pattaya. We specialize in condos, villas, and investment opportunities."
+    },
+    "navigation": {
+      "title": "Navigation"
+    },
+    "properties": {
+      "title": "Properties",
+      "forSale": "For Sale",
+      "forRent": "For Rent"
+    },
+    "contact": {
+      "title": "Contact",
+      "address": "123 Beach Road, Pattaya",
+      "phone": "+66 123 456 789",
+      "email": "info@pw-pattaya.com"
+    },
+    "copyright": "© 2024 PW Pattaya Real Estate. All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "price": "Price",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "area": "Area",
+    "location": "Location",
+    "viewDetails": "View Details",
+    "contactUs": "Contact Us",
+    "learnMore": "Learn More"
+  }
+}
