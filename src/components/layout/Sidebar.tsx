@@ -83,11 +83,11 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
             Projects
           </Link>
           <Link
-            href="/service"
+            href="/services"
             className="block py-3 px-4 text-text-primary hover:bg-gray-100 rounded-lg transition-colors border-b border-gray-100"
             onClick={onClose}
           >
-            Service
+            Services
           </Link>
           <Link
             href="/about"

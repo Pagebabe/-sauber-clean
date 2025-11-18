@@ -51,7 +51,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/service" className="text-white/80 hover:text-white transition-colors text-sm">
+                <Link href="/services" className="text-white/80 hover:text-white transition-colors text-sm">
                   {t('footer.ourServices')}
                 </Link>
               </li>
@@ -87,11 +87,13 @@ export function Footer() {
                   {t('footer.projects')}
                 </Link>
               </li>
+              {/* Blog page not yet implemented
               <li>
                 <Link href="/blog" className="text-white/80 hover:text-white transition-colors text-sm">
                   {t('footer.blog')}
                 </Link>
               </li>
+              */}
             </ul>
           </div>
 
