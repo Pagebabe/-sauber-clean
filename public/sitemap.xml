@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://pw-pattaya.com/</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/"/>
+  </url>
+
+  <!-- Buy Page -->
+  <url>
+    <loc>https://pw-pattaya.com/buy</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/buy"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/buy"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/buy"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/buy"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/buy"/>
+  </url>
+
+  <!-- Rent Page -->
+  <url>
+    <loc>https://pw-pattaya.com/rent</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/rent"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/rent"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/rent"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/rent"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/rent"/>
+  </url>
+
+  <!-- Projects Page -->
+  <url>
+    <loc>https://pw-pattaya.com/projects</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/projects"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/projects"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/projects"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/projects"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/projects"/>
+  </url>
+
+  <!-- About Page -->
+  <url>
+    <loc>https://pw-pattaya.com/about</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/about"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/about"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/about"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/about"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/about"/>
+  </url>
+
+  <!-- Contact Page -->
+  <url>
+    <loc>https://pw-pattaya.com/contact</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/contact"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/contact"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/contact"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/contact"/>
+  </url>
+
+  <!-- Services Page -->
+  <url>
+    <loc>https://pw-pattaya.com/services</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/services"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/services"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/services"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/services"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/services"/>
+  </url>
+
+  <!-- FAQ Page -->
+  <url>
+    <loc>https://pw-pattaya.com/faq</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://pw-pattaya.com/en/faq"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://pw-pattaya.com/de/faq"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://pw-pattaya.com/th/faq"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://pw-pattaya.com/ru/faq"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://pw-pattaya.com/fr/faq"/>
+  </url>
+
+</urlset>

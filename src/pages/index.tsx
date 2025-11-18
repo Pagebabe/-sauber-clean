@@ -3,6 +3,7 @@ import { Footer } from '@/components/layout/Footer';
 import { Hero } from '@/components/Hero';
 import { PropertyCard } from '@/components/property/PropertyCard';
 import { Button } from '@/components/ui/Button';
+import { SEO } from '@/components/seo/SEO';
 import type { GetServerSideProps } from 'next';
 import type { Property } from '@prisma/client';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
@@ -18,6 +19,11 @@ export default function Home({ properties, error }: HomeProps) {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
+      <SEO
+        title="PW Pattaya Real Estate - Properties for Sale & Rent in Pattaya, Thailand"
+        description="Find your dream property in Pattaya. Browse luxury condos, villas, and houses for sale or rent. Expert real estate services with 5-language support."
+        canonical="/"
+      />
       <Header />
 
       {/* Hero Section */}
