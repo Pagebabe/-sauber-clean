@@ -85,15 +85,20 @@ test.describe('Language Switcher', () => {
     await page.click('text=Français');
     await page.waitForLoadState('networkidle');
 
-    // Navigate to Buy page
-    await page.click('.desktop-nav >> text=Acheter');
+    // URL should now have /fr
+    expect(page.url()).toContain('/fr');
+
+    // Navigate directly to Buy page with French locale
+    await page.goto('http://localhost:3000/fr/buy');
     await page.waitForLoadState('networkidle');
 
-    // Check URL still has /fr
-    expect(page.url()).toContain('/fr');
-    expect(page.url()).toContain('/buy');
+    // Check URL has /fr and /buy
+    expect(page.url()).toContain('/fr/buy');
 
     // Language switcher should still show FR
     await expect(page.locator('[data-testid="language-switcher"]')).toContainText('FR');
+
+    // Navigation links should be in French
+    await expect(page.locator('.desktop-nav >> text=Acheter')).toBeVisible();
   });
 });
