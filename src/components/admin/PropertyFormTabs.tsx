@@ -3,7 +3,7 @@
  * Enhanced form for creating/editing properties with all Google Sheets fields
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { Input } from '@/components/ui/Input';
@@ -105,6 +105,107 @@ interface PropertyFormTabsProps {
 
 export function PropertyFormTabs({ formData, setFormData, onSubmit, isSaving, isNew }: PropertyFormTabsProps) {
   const [tabIndex, setTabIndex] = useState(0);
+  const [templates, setTemplates] = useState<any[]>([]);
+  const [selectedTemplateId, setSelectedTemplateId] = useState<string>('');
+  const [showSaveTemplate, setShowSaveTemplate] = useState(false);
+  const [templateName, setTemplateName] = useState('');
+
+  // Fetch templates on mount
+  useEffect(() => {
+    fetchTemplates();
+  }, []);
+
+  const fetchTemplates = async () => {
+    try {
+      const response = await fetch('/api/templates');
+      const data = await response.json();
+      setTemplates(data.templates || []);
+    } catch (error) {
+      console.error('Error fetching templates:', error);
+    }
+  };
+
+  const handleLoadTemplate = async (templateId: string) => {
+    if (!templateId) return;
+
+    try {
+      const response = await fetch(`/api/templates/${templateId}`);
+      const template = await response.json();
+
+      // Apply template to form data
+      setFormData({
+        ...formData,
+        propertyType: template.propertyType,
+        listingType: template.listingType || formData.listingType,
+        location: template.location || formData.location,
+        views: template.views || [],
+        privateFeatures: template.privateFeatures || [],
+        roomsSpaces: template.roomsSpaces || [],
+        communalFacilities: template.communalFacilities || [],
+        technicalEquipment: template.technicalEquipment || [],
+        security: template.security || [],
+        locationFeatures: template.locationFeatures || [],
+        kitchenFeatures: template.kitchenFeatures || [],
+        layoutFeatures: template.layoutFeatures || [],
+        furnishingStatus: template.furnishingStatus || formData.furnishingStatus,
+        commission: template.commission?.toString() || formData.commission,
+        shortTermLet: template.shortTermLet || false,
+        quota: template.quota || formData.quota,
+        transferCosts: template.transferCosts || formData.transferCosts,
+      });
+
+      alert(`Template "${template.name}" loaded successfully!`);
+      setSelectedTemplateId('');
+    } catch (error) {
+      console.error('Error loading template:', error);
+      alert('Failed to load template');
+    }
+  };
+
+  const handleSaveAsTemplate = async () => {
+    if (!templateName.trim()) {
+      alert('Please enter a template name');
+      return;
+    }
+
+    try {
+      const response = await fetch('/api/templates', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: templateName,
+          description: `Template based on ${formData.title || 'property'}`,
+          propertyType: formData.propertyType,
+          listingType: formData.listingType,
+          location: formData.location,
+          views: formData.views,
+          privateFeatures: formData.privateFeatures,
+          roomsSpaces: formData.roomsSpaces,
+          communalFacilities: formData.communalFacilities,
+          technicalEquipment: formData.technicalEquipment,
+          security: formData.security,
+          locationFeatures: formData.locationFeatures,
+          kitchenFeatures: formData.kitchenFeatures,
+          layoutFeatures: formData.layoutFeatures,
+          furnishingStatus: formData.furnishingStatus,
+          commission: parseFloat(formData.commission) || 3.0,
+          shortTermLet: formData.shortTermLet,
+          quota: formData.quota,
+          transferCosts: formData.transferCosts,
+        }),
+      });
+
+      if (!response.ok) throw new Error('Failed to save template');
+
+      alert('Template saved successfully!');
+      setTemplateName('');
+      setShowSaveTemplate(false);
+      fetchTemplates(); // Refresh templates list
+    } catch (error) {
+      console.error('Error saving template:', error);
+      alert('Failed to save template');
+    }
+  };
 
   const handleAutoFill = () => {
     const template = getAutoFillTemplate(formData.propertyType, formData.location);
@@ -120,6 +221,77 @@ export function PropertyFormTabs({ formData, setFormData, onSubmit, isSaving, is
 
   return (
     <form onSubmit={onSubmit} className="bg-white rounded-lg shadow-sm">
+      {/* Template Bar */}
+      {isNew && (
+        <div className="p-4 bg-blue-50 border-b border-blue-200">
+          <div className="flex items-center gap-4">
+            <div className="flex-1 flex items-center gap-3">
+              <label className="text-sm font-medium text-gray-700">Quick Start:</label>
+              <select
+                value={selectedTemplateId}
+                onChange={(e) => {
+                  setSelectedTemplateId(e.target.value);
+                  handleLoadTemplate(e.target.value);
+                }}
+                className="px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+              >
+                <option value="">Load from Template...</option>
+                {templates.map((template) => (
+                  <option key={template.id} value={template.id}>
+                    {template.name} ({template.propertyType})
+                  </option>
+                ))}
+              </select>
+              <span className="text-xs text-gray-500">
+                {templates.length} templates available
+              </span>
+            </div>
+            <button
+              type="button"
+              onClick={() => setShowSaveTemplate(!showSaveTemplate)}
+              className="px-4 py-2 text-sm bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              💾 Save as Template
+            </button>
+          </div>
+
+          {/* Save Template Form */}
+          {showSaveTemplate && (
+            <div className="mt-3 p-3 bg-white border border-gray-200 rounded-lg">
+              <div className="flex items-center gap-3">
+                <input
+                  type="text"
+                  value={templateName}
+                  onChange={(e) => setTemplateName(e.target.value)}
+                  placeholder="Template name (e.g., 'Wongamat Luxury Condo')"
+                  className="flex-1 px-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-2 focus:ring-blue-500"
+                />
+                <button
+                  type="button"
+                  onClick={handleSaveAsTemplate}
+                  className="px-4 py-2 text-sm bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                >
+                  Save Template
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowSaveTemplate(false);
+                    setTemplateName('');
+                  }}
+                  className="px-4 py-2 text-sm bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors"
+                >
+                  Cancel
+                </button>
+              </div>
+              <p className="text-xs text-gray-500 mt-2">
+                This will save all features, facilities, and default settings as a reusable template.
+              </p>
+            </div>
+          )}
+        </div>
+      )}
+
       <Tabs selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
         <TabList className="flex border-b border-gray-200 px-6">
           <Tab className="px-4 py-3 cursor-pointer hover:text-blue-600 border-b-2 border-transparent" selectedClassName="border-blue-600 text-blue-600">

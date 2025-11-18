@@ -149,3 +149,43 @@ model User {
   @@index([email])
   @@index([role])
 }
+
+// Property Template Model
+// Reusable templates for quick property creation
+model PropertyTemplate {
+  id          String   @id @default(cuid())
+  name        String   // Template name (e.g., "Wongamat Condo", "Pratumnak Villa")
+  description String?  @db.Text
+
+  // Property Defaults
+  propertyType String  // condo, house, villa, land
+  listingType  String? // sale, rent (optional - user can choose)
+  location     String? // Default location
+
+  // Default Features
+  views              String[] @default([])
+  privateFeatures    String[] @default([])
+  roomsSpaces        String[] @default([])
+  communalFacilities String[] @default([])
+  technicalEquipment String[] @default([])
+  security           String[] @default([])
+  locationFeatures   String[] @default([])
+  kitchenFeatures    String[] @default([])
+  layoutFeatures     String[] @default([])
+
+  // Default Settings
+  furnishingStatus String? // "Fully Furnished" | "Partially Furnished" | "Unfurnished"
+  commission       Float?  @default(3.0)
+  shortTermLet     Boolean @default(false)
+  quota            String? // "Thai" | "Foreign" | "Limited Company"
+  transferCosts    String? // "Seller Pays" | "Buyer Pays" | "Shared 50/50"
+
+  // Usage Tracking
+  usageCount  Int      @default(0)
+  createdBy   String?  // User ID who created this template
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([propertyType])
+  @@index([location])
+}
