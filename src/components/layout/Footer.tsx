@@ -165,6 +165,14 @@ export function Footer() {
 
         {/* Copyright */}
         <div className="text-center pt-8 border-t border-white/10">
+          <div className="flex justify-center gap-6 mb-4">
+            <Link href="/privacy" className="text-white/60 hover:text-white text-sm transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms" className="text-white/60 hover:text-white text-sm transition-colors">
+              Terms of Service
+            </Link>
+          </div>
           <p className="text-white/60 text-sm">
             {t('footer.copyright')}
           </p>

@@ -1,0 +1,70 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e6]:
+        - generic [ref=e7]:
+          - generic [ref=e9]: PW
+          - generic [ref=e10]:
+            - heading "PW Pattaya Admin" [level=1] [ref=e11]
+            - paragraph [ref=e12]: Real Estate Management
+        - generic [ref=e13]:
+          - generic [ref=e14]:
+            - paragraph [ref=e15]: Admin User
+            - paragraph [ref=e16]: admin
+          - button "Sign Out" [ref=e17]
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - heading "Welcome back, Admin User!" [level=2] [ref=e20]
+        - paragraph [ref=e21]: Manage your properties, projects, and leads from this dashboard.
+      - generic [ref=e22]:
+        - generic [ref=e23]:
+          - generic [ref=e24]:
+            - heading "Total Properties" [level=3] [ref=e25]
+            - img [ref=e27]
+          - paragraph [ref=e29]: "9"
+          - paragraph [ref=e30]: 6 for sale, 3 for rent
+        - generic [ref=e31]:
+          - generic [ref=e32]:
+            - heading "Active Projects" [level=3] [ref=e33]
+            - img [ref=e35]
+          - paragraph [ref=e37]: "3"
+          - paragraph [ref=e38]: Development projects
+        - generic [ref=e39]:
+          - generic [ref=e40]:
+            - heading "New Leads" [level=3] [ref=e41]
+            - img [ref=e43]
+          - paragraph [ref=e45]: "0"
+          - paragraph [ref=e46]: No new leads
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - heading "Total Users" [level=3] [ref=e49]
+            - img [ref=e51]
+          - paragraph [ref=e53]: "1"
+          - paragraph [ref=e54]: 1 admin user
+      - generic [ref=e55]:
+        - heading "Quick Actions" [level=3] [ref=e56]
+        - generic [ref=e57]:
+          - link "Manage Properties View, edit, and delete properties" [ref=e58] [cursor=pointer]:
+            - /url: /admin/properties
+            - heading "Manage Properties" [level=4] [ref=e59]
+            - paragraph [ref=e60]: View, edit, and delete properties
+          - link "Manage Projects View and edit development projects" [ref=e61] [cursor=pointer]:
+            - /url: /admin/projects
+            - heading "Manage Projects" [level=4] [ref=e62]
+            - paragraph [ref=e63]: View and edit development projects
+          - link "Manage Leads View and respond to customer inquiries" [ref=e64] [cursor=pointer]:
+            - /url: /admin/leads
+            - heading "Manage Leads" [level=4] [ref=e65]
+            - paragraph [ref=e66]: View and respond to customer inquiries
+      - generic [ref=e68]:
+        - img [ref=e70]
+        - generic [ref=e72]:
+          - 'heading "🎉 Phase 6 COMPLETE: Full Admin Panel Active!" [level=4] [ref=e73]'
+          - paragraph [ref=e74]: "All admin features are now live: Property CRUD, Project CRUD, and Lead Management. The admin panel is production-ready!"
+  - button "Open Next.js Dev Tools" [ref=e80] [cursor=pointer]:
+    - img [ref=e81]
+  - alert [ref=e84]: PW Pattaya Admin
+```
