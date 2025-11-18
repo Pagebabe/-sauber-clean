@@ -297,7 +297,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   return {
     props: {
       ...(await serverSideTranslations(context.locale || 'en', ['common'])),
-      session,
+      session: session ? JSON.parse(JSON.stringify(session)) : null,
       stats: {
         totalProperties,
         propertiesForSale,
