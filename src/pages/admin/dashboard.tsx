@@ -124,17 +124,23 @@ export default function AdminDashboard() {
         <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200">
           <h3 className="text-lg font-bold text-text-primary mb-4">Quick Actions</h3>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left">
+            <a
+              href="/admin/properties"
+              className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
+            >
+              <h4 className="font-semibold text-text-primary mb-1">Manage Properties</h4>
+              <p className="text-sm text-text-muted">View, edit, and delete properties</p>
+            </a>
+            <a
+              href="/admin/properties/new"
+              className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left block"
+            >
               <h4 className="font-semibold text-text-primary mb-1">Add Property</h4>
               <p className="text-sm text-text-muted">Create a new property listing</p>
-            </button>
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left">
+            </a>
+            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left opacity-50 cursor-not-allowed">
               <h4 className="font-semibold text-text-primary mb-1">Add Project</h4>
-              <p className="text-sm text-text-muted">Create a new development project</p>
-            </button>
-            <button className="p-4 border-2 border-gray-200 rounded-lg hover:border-primary hover:bg-primary/5 transition-colors text-left">
-              <h4 className="font-semibold text-text-primary mb-1">View Leads</h4>
-              <p className="text-sm text-text-muted">Manage customer inquiries</p>
+              <p className="text-sm text-text-muted">Coming in Phase 6 Part 3</p>
             </button>
           </div>
         </div>

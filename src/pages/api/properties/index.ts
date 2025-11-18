@@ -1,8 +1,10 @@
 /**
- * Properties API - GET all properties with filters
+ * Properties API - CRUD operations for properties
  */
 
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '../auth/[...nextauth]';
 import { prisma } from '@/lib/prisma';
 
 export default async function handler(
@@ -75,6 +77,50 @@ export default async function handler(
     } catch (error) {
       console.error('Error fetching properties:', error);
       res.status(500).json({ error: 'Failed to fetch properties' });
+    }
+  } else if (req.method === 'POST') {
+    // Check authentication
+    const session = await getServerSession(req, res, authOptions);
+    if (!session) {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    try {
+      const propertyData = req.body;
+
+      // Create property
+      const property = await prisma.property.create({
+        data: {
+          title: propertyData.title,
+          titleDE: propertyData.titleDE || null,
+          titleTH: propertyData.titleTH || null,
+          titleRU: propertyData.titleRU || null,
+          titleFR: propertyData.titleFR || null,
+          description: propertyData.description,
+          descriptionDE: propertyData.descriptionDE || null,
+          descriptionTH: propertyData.descriptionTH || null,
+          descriptionRU: propertyData.descriptionRU || null,
+          descriptionFR: propertyData.descriptionFR || null,
+          price: parseInt(propertyData.price),
+          location: propertyData.location,
+          bedrooms: parseInt(propertyData.bedrooms),
+          bathrooms: parseInt(propertyData.bathrooms),
+          area: parseFloat(propertyData.area),
+          floor: propertyData.floor ? parseInt(propertyData.floor) : null,
+          propertyType: propertyData.propertyType,
+          listingType: propertyData.listingType,
+          status: propertyData.status || 'active',
+          images: propertyData.images || [],
+          features: propertyData.features || [],
+          latitude: propertyData.latitude ? parseFloat(propertyData.latitude) : null,
+          longitude: propertyData.longitude ? parseFloat(propertyData.longitude) : null,
+        },
+      });
+
+      res.status(201).json(property);
+    } catch (error) {
+      console.error('Error creating property:', error);
+      res.status(500).json({ error: 'Failed to create property' });
     }
   } else {
     res.status(405).json({ error: 'Method not allowed' });
