@@ -21,11 +21,44 @@ export default function ContactPage() {
     message: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Contact form submitted:', formData);
-    alert(t('contact.formSuccess'));
-    setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/leads', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          message: `${formData.subject}\n\n${formData.message}`,
+          source: 'website',
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to submit form');
+      }
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', phone: '', subject: '', message: '' });
+
+      // Auto-hide success message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -107,8 +140,30 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <Button type="submit" variant="primary" size="lg" fullWidth>
-                    {t('contact.formSubmit')}
+                  {/* Success Message */}
+                  {submitStatus === 'success' && (
+                    <div className="mb-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-lg">
+                      <p className="font-semibold">{t('contact.formSuccess')}</p>
+                      <p className="text-sm mt-1">{t('contact.formSuccessMessage')}</p>
+                    </div>
+                  )}
+
+                  {/* Error Message */}
+                  {submitStatus === 'error' && (
+                    <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+                      <p className="font-semibold">{t('contact.formError')}</p>
+                      <p className="text-sm mt-1">{t('contact.formErrorMessage')}</p>
+                    </div>
+                  )}
+
+                  <Button
+                    type="submit"
+                    variant="primary"
+                    size="lg"
+                    fullWidth
+                    disabled={isSubmitting}
+                  >
+                    {isSubmitting ? t('contact.formSubmitting') : t('contact.formSubmit')}
                   </Button>
                 </form>
               </div>
