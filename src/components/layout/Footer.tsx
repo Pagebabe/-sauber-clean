@@ -14,8 +14,11 @@
 
 import React from 'react';
 import Link from 'next/link';
+import { useTranslation } from 'next-i18next';
 
 export function Footer() {
+  const { t } = useTranslation('common');
+
   return (
     <footer className="bg-accent text-white py-16">
       <div className="container mx-auto px-6">
@@ -28,38 +31,38 @@ export function Footer() {
               <div className="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
                 <span className="text-primary font-bold text-sm">PW</span>
               </div>
-              <h3 className="text-xl font-bold">PW Pattaya</h3>
+              <h3 className="text-xl font-bold">{t('footer.companyName')}</h3>
             </div>
             <p className="text-white/80 text-sm leading-relaxed">
-              Global Real Estate Co.,Ltd
+              {t('footer.companyLegal')}
             </p>
             <p className="text-white/80 text-sm mt-2">
-              Real estate in Pattaya - Your trusted partner for buying, renting, and investing in property.
+              {t('footer.companyDescription')}
             </p>
           </div>
 
           {/* Column 2: Company Links */}
           <div>
-            <h4 className="font-semibold mb-4">Company</h4>
+            <h4 className="font-semibold mb-4">{t('footer.companyTitle')}</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/about" className="text-white/80 hover:text-white transition-colors text-sm">
-                  About Us
+                  {t('footer.aboutUs')}
                 </Link>
               </li>
               <li>
                 <Link href="/service" className="text-white/80 hover:text-white transition-colors text-sm">
-                  Our Services
+                  {t('footer.ourServices')}
                 </Link>
               </li>
               <li>
                 <Link href="/contact" className="text-white/80 hover:text-white transition-colors text-sm">
-                  Contact
+                  {t('footer.contact')}
                 </Link>
               </li>
               <li>
                 <Link href="/faq" className="text-white/80 hover:text-white transition-colors text-sm">
-                  FAQ
+                  {t('footer.faq')}
                 </Link>
               </li>
             </ul>
@@ -67,26 +70,26 @@ export function Footer() {
 
           {/* Column 3: Properties Links */}
           <div>
-            <h4 className="font-semibold mb-4">Properties</h4>
+            <h4 className="font-semibold mb-4">{t('footer.propertiesTitle')}</h4>
             <ul className="space-y-2">
               <li>
                 <Link href="/buy" className="text-white/80 hover:text-white transition-colors text-sm">
-                  Buy Property
+                  {t('footer.buyProperty')}
                 </Link>
               </li>
               <li>
                 <Link href="/rent" className="text-white/80 hover:text-white transition-colors text-sm">
-                  Rent Property
+                  {t('footer.rentProperty')}
                 </Link>
               </li>
               <li>
                 <Link href="/projects" className="text-white/80 hover:text-white transition-colors text-sm">
-                  Projects
+                  {t('footer.projects')}
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className="text-white/80 hover:text-white transition-colors text-sm">
-                  Blog
+                  {t('footer.blog')}
                 </Link>
               </li>
             </ul>
@@ -94,19 +97,19 @@ export function Footer() {
 
           {/* Column 4: Contact Info */}
           <div data-testid="footer-contact">
-            <h4 className="font-semibold mb-4">Contact</h4>
+            <h4 className="font-semibold mb-4">{t('footer.contactTitle')}</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-2">
                 <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                 </svg>
-                <span className="text-white/80 text-sm">0969823602</span>
+                <span className="text-white/80 text-sm">{t('footer.phone')}</span>
               </li>
               <li className="flex items-start gap-2">
                 <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-                <span className="text-white/80 text-sm">info@pw-pattaya.com</span>
+                <span className="text-white/80 text-sm">{t('footer.email')}</span>
               </li>
               <li className="flex items-start gap-2">
                 <svg className="w-5 h-5 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,7 +117,7 @@ export function Footer() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span className="text-white/80 text-sm">
-                  Unit no. 004S Park Beach Condominium, Pattaya, Thailand
+                  {t('footer.address')}
                 </span>
               </li>
             </ul>
@@ -161,7 +164,7 @@ export function Footer() {
         {/* Copyright */}
         <div className="text-center pt-8 border-t border-white/10">
           <p className="text-white/60 text-sm">
-            © 2025 PW Pattaya Global Real Estate Co.,Ltd. All rights reserved.
+            {t('footer.copyright')}
           </p>
         </div>
       </div>
