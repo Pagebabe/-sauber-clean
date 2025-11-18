@@ -9,11 +9,13 @@ import { getServerSession } from 'next-auth';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import { authOptions } from '../api/auth/[...nextauth]';
 import { Input } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 
 export default function AdminLoginPage() {
+  const { t } = useTranslation('common');
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,7 +35,7 @@ export default function AdminLoginPage() {
       });
 
       if (result?.error) {
-        setError('Invalid email or password');
+        setError(t('admin.invalidCredentials'));
         setIsLoading(false);
         return;
       }
@@ -42,7 +44,7 @@ export default function AdminLoginPage() {
       router.push('/admin/dashboard');
     } catch (error) {
       console.error('Login error:', error);
-      setError('An error occurred. Please try again.');
+      setError(t('admin.errorOccurred'));
       setIsLoading(false);
     }
   };
@@ -57,8 +59,8 @@ export default function AdminLoginPage() {
             <div className="w-16 h-16 bg-primary rounded-xl flex items-center justify-center mx-auto mb-4">
               <span className="text-white font-bold text-2xl">PW</span>
             </div>
-            <h1 className="text-2xl font-bold text-text-primary mb-2">Admin Login</h1>
-            <p className="text-text-muted">Sign in to access the admin panel</p>
+            <h1 className="text-2xl font-bold text-text-primary mb-2">{t('admin.loginTitle')}</h1>
+            <p className="text-text-muted">{t('admin.loginSubtitle')}</p>
           </div>
 
           {/* Error Message */}
@@ -71,21 +73,21 @@ export default function AdminLoginPage() {
           {/* Login Form */}
           <form onSubmit={handleSubmit} className="space-y-6">
             <Input
-              label="Email"
+              label={t('admin.email')}
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              placeholder="admin@pw-pattaya.com"
+              placeholder={t('admin.emailPlaceholder')}
               required
               fullWidth
             />
 
             <Input
-              label="Password"
+              label={t('admin.password')}
               type="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
+              placeholder={t('admin.passwordPlaceholder')}
               required
               fullWidth
             />
@@ -96,15 +98,15 @@ export default function AdminLoginPage() {
               fullWidth
               disabled={isLoading}
             >
-              {isLoading ? 'Signing in...' : 'Sign In'}
+              {isLoading ? t('admin.signingIn') : t('admin.signIn')}
             </Button>
           </form>
 
           {/* Development Info */}
           {process.env.NODE_ENV === 'development' && (
             <div className="mt-6 p-4 bg-gray-50 rounded-lg border border-gray-200">
-              <p className="text-xs text-gray-600 mb-2 font-semibold">Development Credentials:</p>
-              <p className="text-xs text-gray-500 mb-1">Email: admin@pw-pattaya.com</p>
+              <p className="text-xs text-gray-600 mb-2 font-semibold">{t('admin.devCredentials')}</p>
+              <p className="text-xs text-gray-500 mb-1">Email: {t('admin.emailPlaceholder')}</p>
               <p className="text-xs text-gray-500">Password: admin123</p>
             </div>
           )}
@@ -116,7 +118,7 @@ export default function AdminLoginPage() {
             href="/"
             className="text-white hover:text-primary-light transition-colors text-sm"
           >
-            ← Back to Website
+            {t('admin.backToWebsite')}
           </a>
         </div>
       </div>
