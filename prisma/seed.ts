@@ -23,6 +23,7 @@ async function main() {
     data: {
       email: 'admin@pw-pattaya.com',
       name: 'Admin User',
+      password: 'admin123', // TODO: Hash password in production
       role: 'admin',
     },
   });
@@ -252,17 +253,14 @@ async function main() {
         descriptionTH: 'โครงการหรูริมชายหาดสถาปัตยกรรมแรงบันดาลใจจากโมนาโก',
         location: 'Wongamat Beach',
         developer: 'Riviera Group',
-        completion: '2025-06-01',
+        completion: '2025 Q2',
         units: 484,
         priceFrom: 3500000,
-        status: 'selling',
         images: [
           'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
           'https://images.unsplash.com/photo-1502672260066-6bc35f0a1e1e?w=800',
         ],
-        features: ['Private Beach', 'Infinity Pool', 'Sky Lounge', 'Fitness Center', 'Concierge', '24/7 Security'],
-        latitude: 12.9556,
-        longitude: 100.8831,
+        amenities: ['Private Beach', 'Infinity Pool', 'Sky Lounge', 'Fitness Center', 'Concierge', '24/7 Security'],
       },
       {
         name: 'Dusit Grand Park 2',
@@ -271,16 +269,13 @@ async function main() {
         description: 'Affordable condominium in Jomtien with water park facilities. Perfect for investors and first-time buyers.',
         location: 'Jomtien',
         developer: 'Dusit Group',
-        completion: '2026-12-31',
+        completion: '2026 Q4',
         units: 2256,
         priceFrom: 1290000,
-        status: 'pre-sale',
         images: [
           'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
         ],
-        features: ['Water Park', 'Multiple Pools', 'Gym', 'Restaurant', 'Shuttle Service'],
-        latitude: 12.8900,
-        longitude: 100.8850,
+        amenities: ['Water Park', 'Multiple Pools', 'Gym', 'Restaurant', 'Shuttle Service'],
       },
       {
         name: 'Laguna Beach Resort 4',
@@ -289,16 +284,13 @@ async function main() {
         description: 'Newest addition to the popular Laguna Beach Resort series. Maldives-style resort living in Pattaya.',
         location: 'Jomtien Beach',
         developer: 'Heights Holdings',
-        completion: '2025-03-31',
+        completion: '2025 Q1',
         units: 648,
         priceFrom: 2100000,
-        status: 'under-construction',
         images: [
           'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800',
         ],
-        features: ['Lagoon Pool', 'Beach Access', 'Restaurant', 'Spa', 'Gym'],
-        latitude: 12.8850,
-        longitude: 100.8900,
+        amenities: ['Lagoon Pool', 'Beach Access', 'Restaurant', 'Spa', 'Gym'],
       },
     ],
   });
