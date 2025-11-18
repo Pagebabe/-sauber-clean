@@ -90,7 +90,7 @@ export default function PropertyDetailPage({ property, error }: PropertyDetailPa
           <div className="container mx-auto px-6 py-8">
             <div className="relative h-[400px] md:h-[600px] rounded-lg overflow-hidden">
               <Image
-                src={property.image}
+                src={property.images[0] || '/placeholder.jpg'}
                 alt={property.title}
                 fill
                 className="object-cover"

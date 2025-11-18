@@ -15,7 +15,7 @@ export const mockProperties: Property[] = [
     bathrooms: 2,
     area: 65,
     floor: 12,
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800',
+    images: ['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800'],
     badges: ['promotion'],
   },
   {
@@ -26,7 +26,7 @@ export const mockProperties: Property[] = [
     bedrooms: 4,
     bathrooms: 3,
     area: 220,
-    image: 'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800',
+    images: ['https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800'],
     badges: ['promotion', 'installment'],
   },
   {
@@ -38,7 +38,7 @@ export const mockProperties: Property[] = [
     bathrooms: 2,
     area: 85,
     floor: 8,
-    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800',
+    images: ['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800'],
   },
   {
     id: 'PLE-004',
@@ -49,7 +49,7 @@ export const mockProperties: Property[] = [
     bathrooms: 3,
     area: 180,
     floor: 25,
-    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
+    images: ['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800'],
     badges: ['installment'],
   },
   {
@@ -61,7 +61,7 @@ export const mockProperties: Property[] = [
     bathrooms: 1,
     area: 32,
     floor: 5,
-    image: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
+    images: ['https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800'],
   },
   {
     id: 'PLE-006',
@@ -71,7 +71,7 @@ export const mockProperties: Property[] = [
     bedrooms: 3,
     bathrooms: 2,
     area: 150,
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
+    images: ['https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800'],
     badges: ['promotion'],
   },
 ];

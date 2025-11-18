@@ -27,8 +27,8 @@ export interface Property {
   bedrooms: number;
   bathrooms: number;
   area: number;
-  floor?: number;
-  image: string;
+  floor?: number | null;
+  images: string[];
   badges?: ('promotion' | 'installment')[];
 }
 
@@ -53,7 +53,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
       {/* Image Container */}
       <div className="relative h-48 overflow-hidden bg-gray-100">
         <Image
-          src={property.image}
+          src={property.images[0] || '/placeholder.jpg'}
           alt={property.title}
           fill
           className="object-cover transform group-hover:scale-110 transition-transform duration-500"

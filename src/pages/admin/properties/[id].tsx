@@ -457,7 +457,7 @@ export default function AdminPropertyFormPage() {
           <div className="flex justify-end gap-4 pt-6 border-t border-gray-200">
             <Button
               type="button"
-              variant="outline"
+              variant="secondary"
               onClick={() => router.push('/admin/properties')}
               disabled={isSaving}
             >

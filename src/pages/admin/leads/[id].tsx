@@ -173,7 +173,7 @@ export default function AdminLeadDetailPage() {
               Received on {new Date(lead.createdAt).toLocaleDateString()} via {lead.source}
             </p>
           </div>
-          <Button variant="outline" onClick={() => router.push('/admin/leads')}>
+          <Button variant="secondary" onClick={() => router.push('/admin/leads')}>
             Back to Leads
           </Button>
         </div>
