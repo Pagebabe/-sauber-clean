@@ -316,7 +316,7 @@ export default function AdminPropertiesPage() {
           <div className="flex items-center gap-3">
             {/* Bulk Delete Button (shown when properties are selected) */}
             {selectedProperties.length > 0 && (
-              <Button variant="danger" onClick={handleBulkDelete}>
+              <Button variant="secondary" onClick={handleBulkDelete}>
                 🗑️ Delete {selectedProperties.length}
               </Button>
             )}

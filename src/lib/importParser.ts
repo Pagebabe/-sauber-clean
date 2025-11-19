@@ -79,11 +79,16 @@ export interface ParsedProperty {
   // Kitchen & Layout
   furnishingStatus?: string;
   kitchenFeatures: string[];
+  layoutFeatures?: string[];
 
   // Financial
   maintenanceCharges?: number;
   commonAreaFee?: number;
   transferCosts?: string;
+
+  // Additional
+  availableFrom?: string;
+  specialRemarks?: string;
 
   // Images
   images: string[]; // Raw Google Drive URLs

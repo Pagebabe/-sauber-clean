@@ -297,7 +297,7 @@ export default function AdminProjectsPage() {
           <div className="flex items-center gap-3">
             {/* Bulk Delete Button */}
             {selectedProjects.length > 0 && (
-              <Button variant="danger" onClick={handleBulkDelete}>
+              <Button variant="secondary" onClick={handleBulkDelete}>
                 🗑️ Delete {selectedProjects.length}
               </Button>
             )}
