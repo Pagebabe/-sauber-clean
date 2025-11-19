@@ -19,6 +19,95 @@
 
 ## 🚀 RECENT DEVELOPMENT (November 18, 2025)
 
+### Phase 5: Priority 3 Features (Optional Enhancements) ✅ COMPLETED
+**Completion Date**: November 18, 2025
+
+#### Image Upload API with Cloudinary
+**File**: `src/pages/api/upload.ts` (118 lines) - NEW
+- Cloudinary integration for professional image hosting
+- **Features**:
+  - Authentication required (NextAuth session check)
+  - File type validation (images only)
+  - Max file size: 10MB
+  - Automatic image optimization:
+    - Max dimensions: 1920x1080
+    - Auto quality: "good"
+    - Auto format: WebP (if supported)
+  - Organized folder structure: `pw-pattaya/properties/`
+  - Returns secure URL + metadata (width, height, format, publicId)
+  - Error handling with helpful messages
+  - Temp file cleanup
+
+**Environment Variables Added**:
+- `CLOUDINARY_CLOUD_NAME`
+- `CLOUDINARY_API_KEY`
+- `CLOUDINARY_API_SECRET`
+
+**Usage with ImageUpload Component**:
+```typescript
+<ImageUpload
+  images={images}
+  onImagesChange={setImages}
+  uploadEndpoint="/api/upload"  // ← Uses Cloudinary API
+  maxImages={10}
+  maxSizeMB={5}
+/>
+```
+
+#### Error Boundary System
+**Files Created**:
+1. `src/components/ErrorBoundary.tsx` (95 lines) - NEW
+2. `src/pages/_app.tsx` - MODIFIED
+
+**Features**:
+- React Error Boundary class component
+- Catches JavaScript errors in component tree
+- Prevents whole app crashes
+- Beautiful fallback UI:
+  - Error icon with red theme
+  - User-friendly message
+  - Refresh button
+  - Dev mode: Shows error stack trace
+- Integrated globally in _app.tsx
+- Wraps entire application
+
+**Protection Level**: All pages and components now protected
+
+#### Environment Configuration
+**File**: `.env.example` - UPDATED
+- Added Cloudinary section with setup instructions
+- Sign-up link: https://cloudinary.com/
+- Production example values
+- Clear documentation for each variable
+
+#### Files Modified:
+- `.env.example` - Added Cloudinary vars
+- `src/pages/_app.tsx` - Added ErrorBoundary wrapper
+
+#### New Files Created:
+- `src/pages/api/upload.ts` (118 lines)
+- `src/components/ErrorBoundary.tsx` (95 lines)
+
+#### Dependencies Required:
+```bash
+npm install cloudinary formidable
+npm install --save-dev @types/formidable
+```
+
+#### Impact:
+✅ **Professional image hosting** with Cloudinary CDN
+✅ **Automatic image optimization** (WebP, quality, size)
+✅ **App crash protection** with Error Boundary
+✅ **Better UX** - errors don't break entire app
+✅ **Production ready** - Image uploads to cloud storage
+✅ **ImageUpload component** now fully functional
+
+**Total Lines Added**: 213 lines
+**Total Files Modified**: 2
+**Total Files Created**: 2
+
+---
+
 ### Phase 4: Smoke Test Fixes & Priority 2 Features ✅ COMPLETED
 **Completion Date**: November 18, 2025
 

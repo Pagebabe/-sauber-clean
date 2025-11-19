@@ -4,12 +4,14 @@ import { SessionProvider } from "next-auth/react";
 import { appWithTranslation } from 'next-i18next';
 import { Toaster } from 'react-hot-toast';
 import { ConfirmDialogProvider } from '@/components/admin/ConfirmDialog';
+import { ErrorBoundary } from '@/components/ErrorBoundary';
 
 function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
-    <SessionProvider session={session}>
-      <ConfirmDialogProvider>
-        <Component {...pageProps} />
+    <ErrorBoundary>
+      <SessionProvider session={session}>
+        <ConfirmDialogProvider>
+          <Component {...pageProps} />
         <Toaster
           position="top-right"
           toastOptions={{
@@ -40,6 +42,7 @@ function App({ Component, pageProps: { session, ...pageProps } }: AppProps) {
         />
       </ConfirmDialogProvider>
     </SessionProvider>
+    </ErrorBoundary>
   );
 }
 
