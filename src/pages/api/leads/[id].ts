@@ -55,6 +55,19 @@ export default async function handler(
       console.error('Error updating lead:', error);
       res.status(500).json({ error: 'Failed to update lead' });
     }
+  } else if (req.method === 'DELETE') {
+    try {
+      await prisma.lead.delete({
+        where: {
+          id: id as string,
+        },
+      });
+
+      res.status(200).json({ message: 'Lead deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting lead:', error);
+      res.status(500).json({ error: 'Failed to delete lead' });
+    }
   } else {
     res.status(405).json({ error: 'Method not allowed' });
   }

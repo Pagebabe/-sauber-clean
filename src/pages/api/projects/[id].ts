@@ -6,6 +6,7 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]';
 import { prisma } from '@/lib/prisma';
+import { generateProjectSlug } from '@/lib/slugify';
 
 export default async function handler(
   req: NextApiRequest,
@@ -40,6 +41,9 @@ export default async function handler(
     try {
       const projectData = req.body;
 
+      // Generate unique slug from name (pass ID to exclude self from uniqueness check)
+      const slug = await generateProjectSlug(projectData.name, id as string);
+
       // Update project
       const project = await prisma.project.update({
         where: {
@@ -47,6 +51,7 @@ export default async function handler(
         },
         data: {
           name: projectData.name,
+          slug,
           nameDE: projectData.nameDE || null,
           nameTH: projectData.nameTH || null,
           nameRU: projectData.nameRU || null,

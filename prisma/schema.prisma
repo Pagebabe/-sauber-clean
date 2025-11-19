@@ -31,6 +31,7 @@ model Property {
   propertyType String  // condo, house, villa, land
   listingType  String  // sale, rent
   status      String   @default("active") // active, sold, rented, pending
+  slug        String?  @unique // URL-friendly slug (e.g., "luxury-beach-condo-pattaya")
   images      String[] // Array of image URLs
   features    String[] // Array of features
   latitude    Float?
@@ -102,6 +103,7 @@ model Project {
   completion  String
   units       Int
   priceFrom   Int
+  slug        String?  @unique // URL-friendly slug (e.g., "luxury-villa-complex-pattaya")
   description String   @db.Text
   descriptionDE String? @db.Text
   descriptionTH String? @db.Text
